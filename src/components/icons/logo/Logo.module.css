@@ -1,0 +1,38 @@
+.main {
+  font-family: 'Pacifico', cursive !important;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+  transform: scale(0.75);
+  margin-inline-start: -1vw;
+}
+.logo_title {
+  font-size: 27px;
+}
+.logo_year {
+  font-size: 14px;
+  line-height: 1;
+  position: absolute;
+  top: 32px;
+  left: 20px;
+}
+.logo_year span {
+  margin-left: 20px;
+}
+.logo_year :first-child {
+  margin-left: 0;
+}
+.logo_school {
+  font-size: 8px;
+  display: inline-block;
+  margin-top: 12px;
+}
+@media (min-width: 992px) {
+  .main {
+    transform: scale(1);
+    margin-inline-start: 0;
+  }
+  .logo_year span {
+    margin-left: 24px;
+  }
+}
