@@ -10,10 +10,12 @@ function Header() {
   return (
     <chakra.header
       zIndex="sticky"
-      bg="gray.200"
-      pos="relative"
       px={[3, 5, 8, 16]}
       py={{ base: 1, md: 2.5 }}
+      width="100%"
+      pos="fixed"
+      top='0'
+      left='0'
     >
       <HStack justify={'space-between'}>
         <Logo />

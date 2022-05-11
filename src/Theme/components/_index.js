@@ -8,6 +8,7 @@ const Components = {
     Heading: Heading,
     Text: Text,
     Button: Button,
+    Link: Link,
   },
 };
 

@@ -49,14 +49,7 @@ function NavItems(props) {
   return (
     <>
       {NAV_ITEMS.map(({ title, path }) => (
-        <Link
-          key={title + path}
-          href="path"
-          textTransform={'uppercase'}
-          fontWeight={'700'}
-          letterSpacing={'2px'}
-          {...props}
-        >
+        <Link key={title + path} href="path" variant="nav-link" {...props}>
           {title}
         </Link>
       ))}
