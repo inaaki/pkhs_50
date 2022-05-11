@@ -3,10 +3,10 @@ import React from 'react';
 import SignIn from './icons/SignIn';
 import SignUp from './icons/SignUp';
 
-export default function User ({ user }) {
+export default function User({ user }) {
   return (
     <HStack spacing={[24, null, 5, 10]}>
-      {true ? <LoggedIn /> : <LoggedOut />}
+      {user || false ? <LoggedIn /> : <LoggedOut />}
     </HStack>
   );
 }
@@ -15,7 +15,7 @@ function LoggedIn() {
   const responsiveSize = useBreakpointValue({
     base: 'md',
     md: 'sm',
-    lg: 'md',
+    xl: 'md',
   });
   return (
     <>
@@ -30,14 +30,29 @@ function LoggedIn() {
   );
 }
 function LoggedOut() {
+  const buttons = [
+    { title: 'log in', variant: 'outline', icon: <SignIn /> },
+    { title: 'sign up', variant: 'solid', icon: <SignUp /> },
+  ];
+
+  const responsiveSize = useBreakpointValue({
+    base: 'md',
+    md: 'sm',
+    xl: 'md',
+  });
   return (
     <>
-      <Button size="sm" leftIcon={<SignIn />} iconSpacing={2} variant="outline">
-        sign in
-      </Button>
-      <Button size="sm" leftIcon={<SignUp />} iconSpacing={2} variant="solid">
-        sign up
-      </Button>
+      {buttons.map(({ title, icon, variant }, index) => (
+        <Button
+          key={title + index}
+          size={responsiveSize}
+          leftIcon={icon}
+          variant={variant}
+          iconSpacing={2}
+        >
+          {title}
+        </Button>
+      ))}
     </>
   );
 }
