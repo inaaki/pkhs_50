@@ -5,7 +5,7 @@ import SignUp from './icons/SignUp';
 
 export default function User({ user }) {
   return (
-    <HStack spacing={[24, null, 5, 10]}>
+    <HStack spacing={[20, null, 5, 5, 10]}>
       {user || false ? <LoggedIn /> : <LoggedOut />}
     </HStack>
   );

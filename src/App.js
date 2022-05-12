@@ -1,7 +1,6 @@
-import { chakra } from '@chakra-ui/react';
 import React from 'react';
-import Header from './components/Header';
 import Hero from './components/Hero';
+import Nav from './components/Nav';
 
 function App() {
   return (
@@ -16,9 +15,8 @@ export default App;
 function Layout({ children }) {
   return (
     <>
-      <Header />
+      <Nav />
       {children}
-      <chakra.footer>This is a demo footer</chakra.footer>
     </>
   );
 }

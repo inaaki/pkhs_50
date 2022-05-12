@@ -27,9 +27,9 @@
   display: inline-block;
   margin-top: 12px;
 }
+
 @media (min-width: 992px) {
   .main {
-    transform: scale(1);
     margin-inline-start: 0;
   }
   .logo_year span {

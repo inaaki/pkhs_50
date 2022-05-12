@@ -1,21 +1,26 @@
-import { HStack, Link, Slide, VStack } from '@chakra-ui/react';
-import React from 'react';
+import {
+  Link,
+  Slide,
+  Stack,
+  useBreakpointValue,
+  VStack,
+} from '@chakra-ui/react';
+import React, { useEffect } from 'react';
+import { enableScroll } from '../utils/scroll';
 import User from './User';
 
 /* ----- navbar for mobile user ----- */
 export function MobileNav({ isOpen }) {
   return (
-    <Slide in={isOpen} direction="right" style={{ zIndex: -1 }}>
-      <VStack
-        pos={'absolute'}
-        w="full"
-        right="0"
-        top="0"
-        pt={24}
-        h="100vh"
-        spacing={10}
-        zIndex="hide"
-      >
+    <Slide
+      in={isOpen}
+      direction="right"
+      style={{
+        zIndex: -1,
+        right: `${isOpen ? 0 : '-5rem'}`,
+      }}
+    >
+      <VStack bg="white" h="100vh" pt={24} spacing={10} w="full">
         <User />
         <VStack spacing={5}>
           <NavItems />
@@ -26,14 +31,27 @@ export function MobileNav({ isOpen }) {
 }
 
 /* ----- navbar for desktop user ---- */
-export function DesktopNav(props) {
+export function DesktopNav() {
+  useEffect(() => {
+    enableScroll();
+  }, []);
+
+  const responsiveDirection = useBreakpointValue({
+    base: 'column',
+    lg: 'row',
+  });
   return (
-    <>
-      <HStack spacing={{ base: 5, lg: 8 }}>
-        <NavItems fontSize={['md', 'md', 'sm', 'md']} />
-      </HStack>
+    <Stack
+      //flex-grow=1 for menu centering
+      flexGrow={{ base: 0, lg: 1 }}
+      align="center"
+      direction={responsiveDirection}
+      py={responsiveDirection === 'column' ? 4 : 0}
+      spacing={4}
+    >
+      <NavItems fontSize={['md', 'md', 'sm', 'md']} />
       <User />
-    </>
+    </Stack>
   );
 }
 
@@ -47,12 +65,18 @@ function NavItems(props) {
   ];
 
   return (
-    <>
+    <Stack
+      direction={{ base: 'column', md: 'row' }}
+      //margin-left_right = auto for menu centering
+      mx="auto"
+      spacing={{ base: 5, lg: 4, xl: 8 }}
+      align="center"
+    >
       {NAV_ITEMS.map(({ title, path }) => (
         <Link key={title + path} href="path" variant="nav-link" {...props}>
           {title}
         </Link>
       ))}
-    </>
+    </Stack>
   );
 }
