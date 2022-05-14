@@ -1,4 +1,7 @@
 const Heading = {
+  baseStyle: {
+    color: 'heading',
+  },
   variants: {
     'hero-heading': {
       color: 'brand.500',

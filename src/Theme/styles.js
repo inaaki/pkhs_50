@@ -6,6 +6,12 @@ const styles = {
           boxShadow: 'none!important',
         },
       },
+      '*:disabled': {
+        cursor: 'auto!important',
+      },
+      body: {
+        color: 'text',
+      },
     },
   },
 };

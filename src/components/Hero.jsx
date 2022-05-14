@@ -57,7 +57,7 @@ function Hero() {
             >
               <Heading as={'h1'} variant={'hero-heading'} ms="-0.5">
                 Celebrating
-                <chakra.span color={'gray.600'}> 50 Years </chakra.span>
+                <chakra.span color={'heading'}> 50 Years </chakra.span>
                 of lovely connections
               </Heading>
               <Text mt={4} lineHeight="1.5" pe="2">
@@ -86,7 +86,6 @@ function Hero() {
 
 function HeroImage() {
   const [isMobile] = useMediaQuery('(hover:none)');
-  console.log(isMobile);
 
   return (
     <Square
