@@ -1,7 +1,7 @@
 const Button = {
   baseStyle: {
     transition: 'all 150ms cubic-bezier(0.4, 0, 0.2, 1)',
-    textTransform:'capitalize',
+    textTransform: 'capitalize',
     _active: {
       transform: 'scale(1.05)',
     },
@@ -11,6 +11,10 @@ const Button = {
       width: '60',
       height: '12',
       fontSize: 'xl',
+    },
+    form: {
+      width: '32',
+      height: '10',
     },
   },
   variants: {
