@@ -32,7 +32,7 @@ function Ceremonial() {
           <FormLabel>
             Passing Year / SSC Batch: <Asterisk />
           </FormLabel>
-          <Input type="number" variant="filled" placeholder="eg. 2014" />
+          <Input type="number" placeholder="eg. 2014" />
         </FormControl>
       </GridItem>
 
@@ -59,7 +59,7 @@ function Ceremonial() {
         <FormLabel>Number of Guest:</FormLabel>
         <InputGroup>
           <InputLeftAddon children="You (1)+" pointerEvents="none" />
-          <Input type="number" variant="filled" placeholder="0" />
+          <Input type="number" placeholder="0" />
         </InputGroup>
       </GridItem>
 
@@ -67,7 +67,7 @@ function Ceremonial() {
       <GridItem colSpan={1}>
         <FormControl>
           <FormLabel>Last Educational Qualification:</FormLabel>
-          <Input variant={'filled'} placeholder="eg. Bsc in CSE" />
+          <Input placeholder="eg. Bsc in CSE" />
         </FormControl>
       </GridItem>
 
@@ -75,7 +75,7 @@ function Ceremonial() {
       <GridItem colSpan={1}>
         <FormControl>
           <FormLabel>Last Educational Institute:</FormLabel>
-          <Input variant={'filled'} placeholder="eg. National University" />
+          <Input placeholder="eg. National University" />
         </FormControl>
       </GridItem>
 
@@ -83,7 +83,7 @@ function Ceremonial() {
       <GridItem colSpan={1}>
         <FormLabel>Others:</FormLabel>
         <InputGroup>
-          <Input variant="filled" placeholder="Other information" />
+          <Input placeholder="Other information" />
         </InputGroup>
       </GridItem>
     </SimpleGrid>

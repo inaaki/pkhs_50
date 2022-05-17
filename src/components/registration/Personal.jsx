@@ -29,14 +29,14 @@ function Personal() {
           <FormLabel>
             Name (English): <Asterisk />
           </FormLabel>
-          <Input variant={'filled'} placeholder="Enter your name" />
+          <Input placeholder="Enter your name" />
         </FormControl>
       </GridItem>
       {/* bangla name */}
       <GridItem colSpan={1}>
         <FormControl>
           <FormLabel>Name (Bangla):</FormLabel>
-          <Input variant={'filled'} placeholder="Name in Bangla" />
+          <Input placeholder="Name in Bangla" />
         </FormControl>
       </GridItem>
       {/* parent's name */}
@@ -45,31 +45,27 @@ function Personal() {
           <FormLabel>
             Father's Name: <Asterisk />
           </FormLabel>
-          <Input variant={'filled'} placeholder="Enter your Father's Name" />
+          <Input placeholder="Enter your Father's Name" />
         </FormControl>
       </GridItem>
       <GridItem colSpan={1}>
         <FormControl>
           <FormLabel>Mother's Name:</FormLabel>
-          <Input variant={'filled'} placeholder="Your Mother's name" />
+          <Input placeholder="Your Mother's name" />
         </FormControl>
       </GridItem>
       {/* date of birth */}
       <GridItem colSpan={1}>
         <FormControl>
           <FormLabel>Spouse Name:</FormLabel>
-          <Input variant={'filled'} placeholder="Enter your Spouse name" />
+          <Input placeholder="Enter your Spouse name" />
         </FormControl>
       </GridItem>
       {/* nid */}
       <GridItem colSpan={1}>
         <FormControl>
           <FormLabel>NID Number:</FormLabel>
-          <Input
-            variant={'filled'}
-            type="number"
-            placeholder="Enter your NID number"
-          />
+          <Input type="number" placeholder="Enter your NID number" />
         </FormControl>
       </GridItem>
       {/* religion */}

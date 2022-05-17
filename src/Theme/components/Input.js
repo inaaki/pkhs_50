@@ -16,10 +16,10 @@ const Input = {
         },
       },
     },
-    defaultProps: {
-      size: 'md',
-      variant: 'filled',
-    },
+  },
+  defaultProps: {
+    size: 'md',
+    variant: 'filled',
   },
 };
 
