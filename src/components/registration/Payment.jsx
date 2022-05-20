@@ -122,7 +122,14 @@ function PaymentDetails({ amount, method, onChange }) {
   return (
     <>
       {method === 'bkash' ? bkashDetails : bankDetails}
-      <Input placeholder="Enter your Transaction ID" onChange={onChange} />
+      <Input
+        placeholder="Enter your Transaction ID"
+        _focus={{
+          bg: 'white',
+          borderColor:'brand.700'
+        }}
+        onChange={onChange}
+      />
     </>
   );
 }
