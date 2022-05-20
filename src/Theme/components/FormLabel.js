@@ -2,6 +2,7 @@ const FormLabel = {
   baseStyle: {
     color: 'heading',
     fontSize: 'lg',
+    textTransform:'capitalize'
   },
 };
 
