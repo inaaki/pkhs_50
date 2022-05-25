@@ -36,6 +36,15 @@ function Ceremonial() {
         </FormControl>
       </GridItem>
 
+      {/* guest number */}
+      <GridItem colSpan={1}>
+        <FormLabel>Number of Guest:</FormLabel>
+        <InputGroup>
+          <InputLeftAddon children="You (1)+" pointerEvents="none" />
+          <Input type="number" placeholder="0" />
+        </InputGroup>
+      </GridItem>
+
       {/* t-shirt size*/}
       <GridItem colSpan={1}>
         <FormLabel>
@@ -52,15 +61,6 @@ function Ceremonial() {
             </chakra.option>
           ))}
         </Select>
-      </GridItem>
-
-      {/* guest number */}
-      <GridItem colSpan={1}>
-        <FormLabel>Number of Guest:</FormLabel>
-        <InputGroup>
-          <InputLeftAddon children="You (1)+" pointerEvents="none" />
-          <Input type="number" placeholder="0" />
-        </InputGroup>
       </GridItem>
 
       {/* qualification */}
