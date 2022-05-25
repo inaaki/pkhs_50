@@ -2,38 +2,55 @@ import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons';
 import {
   Button,
   ButtonGroup,
+  Center,
   chakra,
   Divider,
   Heading,
+  useMediaQuery,
   VStack,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useMemo } from 'react';
+import withBackground from '../../hoc/withBackground';
 import Card from '../Card';
+import Ceremonial from './Ceremonial';
+import Contact from './Contact';
+import Payment from './Payment';
 import Personal from './Personal';
 import RequiredLabel from './RequiredLabel';
 
 const category = ['personal', 'educational', 'contact', 'ceremonial'];
 
 function Registration() {
+  const elements = useMemo(
+    () => [
+      { title: 'personal', element: props => <Personal {...props} /> },
+      { title: 'contact', element: props => <Contact {...props} /> },
+      { title: 'ceremonial', element: props => <Ceremonial {...props} /> },
+      { title: 'payment', element: props => <Payment {...props} /> },
+    ],
+    []
+  );
   const [categoryIndex, setCategoryIndex] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   return (
-    <Card w="full" maxW={{ base: 'lg', md: '3xl' }}>
-      <VStack spacing={10}>
-        <FormHeading title={category[categoryIndex] + ' information'} />
+    <Center p={{ base: 4, md: 10 }} py={10} minH="100vh">
+      <Card w="full" maxW={{ base: 'lg', md: '3xl' }} variant="form">
+        <VStack spacing={10}>
+          <FormHeading title={elements[categoryIndex].title + ' information'} />
+          <chakra.form w="full">
+            {elements[categoryIndex].element()}
 
-        {/* form */}
-        <chakra.form w="full">
-          <Personal />
-
-          <Buttons
-            categoryIndex={categoryIndex}
-            setCategoryIndex={setCategoryIndex}
-            targetLength={category.length - 1}
-          />
-        </chakra.form>
-      </VStack>
-    </Card>
+            <Buttons
+              categoryIndex={categoryIndex}
+              setCategoryIndex={setCategoryIndex}
+              targetLength={elements.length - 1}
+              loading={loading}
+            />
+          </chakra.form>
+        </VStack>
+      </Card>
+    </Center>
   );
 }
 
@@ -57,20 +74,21 @@ function FormHeading({ title }) {
 }
 
 function Buttons(props) {
-  const { targetLength, categoryIndex, setCategoryIndex } = props;
+  const [isMd] = useMediaQuery('(min-width: 768px)');
+  const { targetLength, categoryIndex, setCategoryIndex, loading } = props;
 
   return (
     <ButtonGroup w="full" justifyContent="space-between" mt={10}>
       <Button
         type="button"
         leftIcon={<ArrowLeftIcon />}
-        disabled={categoryIndex > 0 ? false : true}
+        disabled={(categoryIndex > 0 ? false : true) || loading}
         onClick={() => setCategoryIndex(state => state - 1)}
       >
-        prev
+        {isMd && 'prev'}
       </Button>
       {categoryIndex === targetLength && (
-        <Button type="submit" isLoading={false} loadingText="submitting">
+        <Button type="submit" isLoading={loading} loadingText="submitting">
           submit
         </Button>
       )}
@@ -80,11 +98,11 @@ function Buttons(props) {
           rightIcon={<ArrowRightIcon />}
           onClick={() => setCategoryIndex(state => state + 1)}
         >
-          next
+          {isMd && 'next'}
         </Button>
       )}
     </ButtonGroup>
   );
 }
 
-export default Registration;
+export default withBackground(Registration);

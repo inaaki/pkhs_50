@@ -1,11 +1,16 @@
 const Card = {
   baseStyle: {
     borderRadius: 'lg',
-    boxShadow: 'base',
-    border: '1px solid',
-    borderColor: 'gray.300',
-    p: 10,
+    boxShadow: 'md',
+    border:'1px',
+    borderColor:'gray.300',
+    p: { base: 5, md: 10 },
     d: 'inline-block',
+  },
+  variants: {
+    form: {
+      bg: 'white',
+    },
   },
 };
 
