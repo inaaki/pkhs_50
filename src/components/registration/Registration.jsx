@@ -9,7 +9,7 @@ import {
   useMediaQuery,
   VStack,
 } from '@chakra-ui/react';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import withBackground from '../../hoc/withBackground';
 import Card from '../Card';
 import Ceremonial from './Ceremonial';
@@ -17,8 +17,6 @@ import Contact from './Contact';
 import Payment from './Payment';
 import Personal from './Personal';
 import RequiredLabel from './RequiredLabel';
-
-const category = ['personal', 'educational', 'contact', 'ceremonial'];
 
 function Registration() {
   const elements = useMemo(
@@ -32,14 +30,38 @@ function Registration() {
   );
   const [categoryIndex, setCategoryIndex] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [state, setState] = useState({});
+
+  //submit function
+  const handleSubmit = e => {
+    e.preventDefault();
+    setLoading(true);
+    console.log('submitting');
+    setTimeout(() => setLoading(false), 2000);
+  };
+
+  //handle change function
+  const handleChange = e => {
+    const { name, value } = e.target;
+    console.log('name and value', name, value);
+
+    const newState = { ...state };
+    newState[name] = value;
+    setState(newState);
+
+    console.log(newState);
+  };
 
   return (
     <Center p={{ base: 4, md: 10 }} py={10} minH="100vh">
       <Card w="full" maxW={{ base: 'lg', md: '3xl' }} variant="form">
         <VStack spacing={10}>
           <FormHeading title={elements[categoryIndex].title + ' information'} />
-          <chakra.form w="full">
-            {elements[categoryIndex].element()}
+          <chakra.form w="full" onSubmit={handleSubmit}>
+            {elements[categoryIndex].element({
+              onChange: handleChange,
+              state,
+            })}
 
             <Buttons
               categoryIndex={categoryIndex}
@@ -67,7 +89,6 @@ function FormHeading({ title }) {
         </Heading>
         <RequiredLabel />
       </VStack>
-
       <Divider />
     </VStack>
   );
