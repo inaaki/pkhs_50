@@ -10,7 +10,7 @@ import {
   Text,
   VStack as VerticalStack,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { fees } from '../../data';
 import Asterisk from './Asterisk';
 
@@ -75,7 +75,7 @@ function Payment() {
             p={5}
             borderRadius="md"
             bg={method === 'bkash' ? 'brand.500' : 'teal.500'}
-            color={'gray.700'}
+            color="white"
           >
             <PaymentDetails method={method} amount={total} />
           </Box>
@@ -86,37 +86,43 @@ function Payment() {
 }
 
 function PaymentDetails({ amount, method, onChange }) {
-  const bkashDetails = (
-    <Text fontSize={'md'} color={'white'} mb={5}>
-      Please, pay <chakra.span fontSize={'lg'}>{amount}tk</chakra.span> only via
-      send-money.
-      <br />
-      Bkash merchant number:
-      <Text letterSpacing="1px" fontWeight="500" mt={1} color="white">
-        01712-059603
-      </Text>
-    </Text>
+  const bkashDetails = useMemo(
+    () => (
+      <>
+        Please, pay <chakra.span fontSize={'lg'}>{amount}tk</chakra.span> only
+        via send-money.
+        <br />
+        Bkash merchant number:
+        <Text letterSpacing="1px" fontWeight="500" mt={1} color="white">
+          01712-059603
+        </Text>
+      </>
+    ),
+    []
   );
 
-  const bankDetails = (
-    <Box fontSize={'md'} color={'white'} mb={5}>
-      <chakra.span pb={1} borderColor="text" borderBottom="1px">
-        Bank details:
-      </chakra.span>
-      <Flex mt={5} direction={{ base: 'column', md: 'row' }} gap={5}>
-        <Box lineHeight="1.8">
-          A/C: Name: Subarna jayanti 2022 <br />
-          A/C No: 9901184055995 <br />
-          Bank Name: Al Arafah Islami Bank Ltd. <br />
-          Branch Name: Agent Banking
-        </Box>
-        <Box lineHeight="1.8">
-          Routing Number: 015270609 <br />
-          SWIFT Code: ALARBDDH <br />
-          Pilgiri Outlet Office Number: 01813616677
-        </Box>
-      </Flex>
-    </Box>
+  const bankDetails = useMemo(
+    () => (
+      <>
+        <chakra.span pb={1} borderColor="text" borderBottom="1px">
+          Bank details:
+        </chakra.span>
+        <Flex mt={5} direction={{ base: 'column', md: 'row' }} gap={5}>
+          <Box lineHeight="1.8">
+            A/C: Name: Subarna jayanti 2022 <br />
+            A/C No: 9901184055995 <br />
+            Bank Name: Al Arafah Islami Bank Ltd. <br />
+            Branch Name: Agent Banking
+          </Box>
+          <Box lineHeight="1.8">
+            Routing Number: 015270609 <br />
+            SWIFT Code: ALARBDDH <br />
+            Pilgiri Outlet Office Number: 01813616677
+          </Box>
+        </Flex>
+      </>
+    ),
+    []
   );
 
   return (
@@ -124,9 +130,10 @@ function PaymentDetails({ amount, method, onChange }) {
       {method === 'bkash' ? bkashDetails : bankDetails}
       <Input
         placeholder="Enter your Transaction ID"
+        mt={5}
         _focus={{
           bg: 'white',
-          borderColor:'brand.700'
+          borderColor: 'brand.700',
         }}
         onChange={onChange}
       />
