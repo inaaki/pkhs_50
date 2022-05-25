@@ -1,19 +1,14 @@
 import {
-  chakra,
   FormControl,
   FormLabel,
   GridItem,
-  HStack,
   Input,
-  Radio,
-  RadioGroup,
-  Select,
   SimpleGrid,
 } from '@chakra-ui/react';
 import React from 'react';
 import Asterisk from './Asterisk';
 
-function Contact() {
+function Contact({ onChange, state }) {
   return (
     <SimpleGrid
       columns={{ base: 1, md: 2 }}
@@ -27,7 +22,12 @@ function Contact() {
           <FormLabel>
             village: <Asterisk />
           </FormLabel>
-          <Input placeholder="Enter your name" />
+          <Input
+            placeholder="Enter your village name"
+            name="village"
+            value={state.village || ''}
+            onChange={onChange}
+          />
         </FormControl>
       </GridItem>
 
@@ -38,7 +38,12 @@ function Contact() {
             post office
             <Asterisk />
           </FormLabel>
-          <Input placeholder="Enter your name" />
+          <Input
+            placeholder="Enter your Post Office name"
+            name="postOffice"
+            value={state.postOffice || ''}
+            onChange={onChange}
+          />
         </FormControl>
       </GridItem>
 
@@ -49,10 +54,14 @@ function Contact() {
             upazila
             <Asterisk />
           </FormLabel>
-          <Input placeholder="Enter your name" />
+          <Input
+            placeholder="Enter your upazila name"
+            name="upazila"
+            value={state.upazila || ''}
+            onChange={onChange}
+          />
         </FormControl>
       </GridItem>
-
 
       {/* dist */}
       <GridItem colSpan={1}>
@@ -61,7 +70,12 @@ function Contact() {
             district
             <Asterisk />
           </FormLabel>
-          <Input placeholder="Enter your name" />
+          <Input
+            placeholder="Enter your district name"
+            name="district"
+            value={state.district || ''}
+            onChange={onChange}
+          />
         </FormControl>
       </GridItem>
 
@@ -72,27 +86,40 @@ function Contact() {
             mobile
             <Asterisk />
           </FormLabel>
-          <Input type={'number'} placeholder="Enter your name" />
+          <Input
+            type={'number'}
+            placeholder="Enter your mobile number"
+            name="mobile"
+            value={state.mobile || ''}
+            onChange={onChange}
+          />
         </FormControl>
       </GridItem>
 
       {/* mobile */}
       <GridItem colSpan={1}>
         <FormControl>
-          <FormLabel>
-            emergency mobile number
-          </FormLabel>
-          <Input type={'number'} placeholder="Enter your name" />
+          <FormLabel>emergency mobile number</FormLabel>
+          <Input
+            type={'number'}
+            placeholder="Emergency mobile number"
+            name="emergencyMobile"
+            value={state.emergencyMobile || ''}
+            onChange={onChange}
+          />
         </FormControl>
       </GridItem>
-      
+
       {/* email */}
       <GridItem colSpan={1}>
         <FormControl>
-          <FormLabel>
-            email
-          </FormLabel>
-          <Input placeholder="Enter your name" />
+          <FormLabel>email</FormLabel>
+          <Input
+            placeholder="Enter your email"
+            name="email"
+            value={state.email || ''}
+            onChange={onChange}
+          />
         </FormControl>
       </GridItem>
     </SimpleGrid>

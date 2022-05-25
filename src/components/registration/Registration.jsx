@@ -42,11 +42,11 @@ function Registration() {
 
   //handle change function
   const handleChange = e => {
-    const { name, value } = e.target;
-    console.log('name and value', name, value);
+    const { name, value, type } = e.target;
+    console.log('name and value', name, value, type);
 
     const newState = { ...state };
-    newState[name] = value;
+    newState[name] = type === 'number' ? Number(value) : value;
     setState(newState);
 
     console.log(newState);
