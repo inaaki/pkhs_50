@@ -11,6 +11,7 @@ import {
 } from '@chakra-ui/react';
 import React, { useMemo, useState } from 'react';
 import withBackground from '../../hoc/withBackground';
+import { validation, registrationSchema } from '../../validations';
 import Card from '../Card';
 import Ceremonial from './Ceremonial';
 import Contact from './Contact';
@@ -67,14 +68,30 @@ function Registration() {
   const [categoryIndex, setCategoryIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState(initialState);
+  const [errors, setErrors] = useState({});
   const currentPart = elements[categoryIndex].title;
 
   //submit function
   const handleSubmit = e => {
     e.preventDefault();
-    setLoading(true);
-    console.log('submitting');
-    setTimeout(() => setLoading(false), 2000);
+    //
+    validation(registrationSchema[currentPart], state[currentPart])
+      .then(r => {
+        console.log(r);
+        //
+        setLoading(true);
+        console.log('submitting');
+        setTimeout(() => {
+          setLoading(false);
+          setCategoryIndex(0);
+          setState({ ...initialState });
+        }, 5000);
+      })
+      .catch(e => {
+        console.log(e);
+        setErrors(e);
+        setLoading(false);
+      });
   };
 
   //handle change function
@@ -86,14 +103,21 @@ function Registration() {
     if (value.includes('  ')) {
       value = value.replace(/\s\s+/g, ' ');
     }
-    if (type === 'number') {
-      value = +value || 0;
-    }
-
     const newState = { ...state };
     newState[currentPart][name] = value;
     setState(newState);
-    console.log(newState);
+  };
+
+  const handleNext = () => {
+    validation(registrationSchema[currentPart], state[currentPart])
+      .then(r => {
+        setCategoryIndex(state => state + 1);
+        console.log(r);
+      })
+      .catch(e => {
+        console.log(e);
+        setErrors(e);
+      });
   };
 
   return (
@@ -104,7 +128,9 @@ function Registration() {
           <chakra.form w="full" onSubmit={handleSubmit}>
             {elements[categoryIndex].element({
               onChange: handleChange,
-              state: state[currentPart] || {},
+              state: state[currentPart],
+              guest: state.ceremonial.guest,
+              batch: state.ceremonial.batch,
             })}
 
             <Buttons
@@ -112,6 +138,7 @@ function Registration() {
               setCategoryIndex={setCategoryIndex}
               targetLength={elements.length - 1}
               loading={loading}
+              handleNext={handleNext}
             />
           </chakra.form>
         </VStack>
@@ -140,7 +167,8 @@ function FormHeading({ title }) {
 
 function Buttons(props) {
   const [isMd] = useMediaQuery('(min-width: 768px)');
-  const { targetLength, categoryIndex, setCategoryIndex, loading } = props;
+  const { targetLength, categoryIndex, setCategoryIndex, loading, handleNext } =
+    props;
 
   return (
     <ButtonGroup w="full" justifyContent="space-between" mt={10}>
@@ -152,18 +180,20 @@ function Buttons(props) {
       >
         {isMd && 'prev'}
       </Button>
-      {categoryIndex === targetLength && (
-        <Button type="submit" isLoading={loading} loadingText="submitting">
-          submit
-        </Button>
-      )}
+
       {categoryIndex !== targetLength && (
         <Button
           type="button"
           rightIcon={<ArrowRightIcon />}
-          onClick={() => setCategoryIndex(state => state + 1)}
+          onClick={handleNext}
         >
           {isMd && 'next'}
+        </Button>
+      )}
+
+      {categoryIndex === targetLength && (
+        <Button type="submit" isLoading={loading} loadingText="submitting">
+          submit
         </Button>
       )}
     </ButtonGroup>

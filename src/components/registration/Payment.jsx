@@ -20,15 +20,11 @@ const VStack = chakra(VerticalStack, {
   },
 });
 
-function Payment({ state, onChange }) {
-  //default values will be discarded during validation
-  const guestCount = state.guest || 0;
-  const batch = state.batch || 2014;
-  //
+function Payment({ state, onChange, guest, batch }) {
   const method = state.paymentMethod;
   //
   const ownFee = batch < 2014 ? fees.big : fees.small;
-  const guestFee = fees.guest * guestCount;
+  const guestFee = fees.guest * guest;
   const total = ownFee + guestFee;
   const pricing = [
     { title: 'Your own fee', fee: ownFee },
