@@ -2,7 +2,7 @@ const Input = {
   variants: {
     filled: {
       field: {
-        color: 'gray.600',
+        color: 'textHighlight',
         fontWeight: '500',
         _focus: {
           borderColor: 'brand.500',
@@ -16,6 +16,13 @@ const Input = {
         },
       },
     },
+  },
+  sizes:{
+    md:{
+      field:{
+        fontSize:'lg'
+      }
+    }
   },
   defaultProps: {
     size: 'md',
