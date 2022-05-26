@@ -18,6 +18,42 @@ import Payment from './Payment';
 import Personal from './Personal';
 import RequiredLabel from './RequiredLabel';
 
+const initialState = {
+  personal: {
+    englishName: '',
+    banglaName: '',
+    father: '',
+    mother: '',
+    spouse: '',
+    nid: '',
+    religion: '',
+    gender: '',
+    blood: '',
+    birthDate: '',
+  },
+  contact: {
+    village: '',
+    postOffice: '',
+    upazila: '',
+    district: '',
+    mobile: '',
+    emergencyMobile: '',
+    email: '',
+  },
+  ceremonial: {
+    batch: '',
+    guest: '',
+    size: '',
+    qualification: '',
+    institute: '',
+    others: '',
+  },
+  payment: {
+    paymentMethod: 'bkash',
+    paymentId: '',
+  },
+};
+
 function Registration() {
   const elements = useMemo(
     () => [
@@ -30,7 +66,8 @@ function Registration() {
   );
   const [categoryIndex, setCategoryIndex] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [state, setState] = useState({});
+  const [state, setState] = useState(initialState);
+  const currentPart = elements[categoryIndex].title;
 
   //submit function
   const handleSubmit = e => {
@@ -42,13 +79,20 @@ function Registration() {
 
   //handle change function
   const handleChange = e => {
-    const { name, value, type } = e.target;
-    console.log('name and value', name, value, type);
+    if (!state[currentPart]) {
+      state[currentPart] = {};
+    }
+    let { name, value, type } = e.target;
+    if (value.includes('  ')) {
+      value = value.replace(/\s\s+/g, ' ');
+    }
+    if (type === 'number') {
+      value = +value || 0;
+    }
 
     const newState = { ...state };
-    newState[name] = type === 'number' ? Number(value) : value;
+    newState[currentPart][name] = value;
     setState(newState);
-
     console.log(newState);
   };
 
@@ -60,7 +104,7 @@ function Registration() {
           <chakra.form w="full" onSubmit={handleSubmit}>
             {elements[categoryIndex].element({
               onChange: handleChange,
-              state,
+              state: state[currentPart] || {},
             })}
 
             <Buttons

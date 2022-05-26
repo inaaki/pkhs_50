@@ -33,7 +33,7 @@ function Personal({ onChange, state }) {
           <Input
             placeholder="Enter your name"
             name="englishName"
-            value={state.englishName || ''}
+            value={state.englishName}
             onChange={onChange}
           />
         </FormControl>
@@ -45,7 +45,7 @@ function Personal({ onChange, state }) {
           <Input
             placeholder="Name in Bangla"
             name="banglaName"
-            value={state.banglaName || ''}
+            value={state.banglaName}
             onChange={onChange}
           />
         </FormControl>
@@ -59,7 +59,7 @@ function Personal({ onChange, state }) {
           <Input
             placeholder="Enter your Father's Name"
             name="father"
-            value={state.father || ''}
+            value={state.father}
             onChange={onChange}
           />
         </FormControl>
@@ -70,7 +70,7 @@ function Personal({ onChange, state }) {
           <Input
             placeholder="Your Mother's name"
             name="mother"
-            value={state.mother || ''}
+            value={state.mother}
             onChange={onChange}
           />
         </FormControl>
@@ -83,7 +83,7 @@ function Personal({ onChange, state }) {
             placeholder="Enter your Spouse name"
             name="spouse"
             onChange={onChange}
-            value={state.spouse || ''}
+            value={state.spouse}
           />
         </FormControl>
       </GridItem>
@@ -95,7 +95,7 @@ function Personal({ onChange, state }) {
             type="number"
             placeholder="Enter your NID number"
             name="nid"
-            value={state.nid || ''}
+            value={state.nid}
             onChange={onChange}
           />
         </FormControl>
@@ -103,7 +103,7 @@ function Personal({ onChange, state }) {
       {/* religion */}
       <GridItem colSpan={1}>
         <FormLabel>Religion:</FormLabel>
-        <RadioGroup name="religion" value={state.religion || ''}>
+        <RadioGroup name="religion" value={state.religion}>
           <SimpleGrid
             gap={1}
             columns={2}
@@ -124,7 +124,7 @@ function Personal({ onChange, state }) {
           <FormLabel>
             Gender: <Asterisk />
           </FormLabel>
-          <RadioGroup name="gender" value={state.gender || ''}>
+          <RadioGroup name="gender" value={state.gender}>
             <HStack spacing={6}>
               {['male', 'female'].map(item => (
                 <Radio key={item} value={item} onChange={onChange}>
@@ -141,7 +141,7 @@ function Personal({ onChange, state }) {
         <Select
           placeholder="Blood group?"
           name="blood"
-          value={state.blood || ''}
+          value={state.blood}
           variant="filled"
           onChange={onChange}
         >
@@ -159,7 +159,7 @@ function Personal({ onChange, state }) {
           type={'date'}
           variant="filled"
           name="birthDate"
-          value={state.birthDate || ''}
+          value={state.birthDate}
           onChange={onChange}
         />
       </GridItem>

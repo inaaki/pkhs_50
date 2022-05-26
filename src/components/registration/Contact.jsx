@@ -25,7 +25,7 @@ function Contact({ onChange, state }) {
           <Input
             placeholder="Enter your village name"
             name="village"
-            value={state.village || ''}
+            value={state.village}
             onChange={onChange}
           />
         </FormControl>
@@ -41,7 +41,7 @@ function Contact({ onChange, state }) {
           <Input
             placeholder="Enter your Post Office name"
             name="postOffice"
-            value={state.postOffice || ''}
+            value={state.postOffice}
             onChange={onChange}
           />
         </FormControl>
@@ -57,7 +57,7 @@ function Contact({ onChange, state }) {
           <Input
             placeholder="Enter your upazila name"
             name="upazila"
-            value={state.upazila || ''}
+            value={state.upazila}
             onChange={onChange}
           />
         </FormControl>
@@ -73,7 +73,7 @@ function Contact({ onChange, state }) {
           <Input
             placeholder="Enter your district name"
             name="district"
-            value={state.district || ''}
+            value={state.district}
             onChange={onChange}
           />
         </FormControl>
@@ -90,7 +90,7 @@ function Contact({ onChange, state }) {
             type={'number'}
             placeholder="Enter your mobile number"
             name="mobile"
-            value={state.mobile || ''}
+            value={state.mobile}
             onChange={onChange}
           />
         </FormControl>
@@ -104,7 +104,7 @@ function Contact({ onChange, state }) {
             type={'number'}
             placeholder="Emergency mobile number"
             name="emergencyMobile"
-            value={state.emergencyMobile || ''}
+            value={state.emergencyMobile}
             onChange={onChange}
           />
         </FormControl>
@@ -117,7 +117,7 @@ function Contact({ onChange, state }) {
           <Input
             placeholder="Enter your email"
             name="email"
-            value={state.email || ''}
+            value={state.email}
             onChange={onChange}
           />
         </FormControl>

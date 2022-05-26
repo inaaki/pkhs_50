@@ -25,7 +25,7 @@ function Payment({ state, onChange }) {
   const guestCount = state.guest || 0;
   const batch = state.batch || 2014;
   //
-  const method = state.paymentMethod || 'bkash';
+  const method = state.paymentMethod;
   //
   const ownFee = batch < 2014 ? fees.big : fees.small;
   const guestFee = fees.guest * guestCount;
@@ -145,7 +145,7 @@ function PaymentDetails({ amount, method, state, onChange }) {
           borderColor: 'brand.700',
         }}
         name="paymentId"
-        value={state.paymentId || ''}
+        value={state.paymentId}
         onChange={onChange}
       />
     </>

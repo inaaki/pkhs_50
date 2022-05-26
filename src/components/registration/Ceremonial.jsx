@@ -36,7 +36,7 @@ function Ceremonial({ onChange, state }) {
             type="number"
             placeholder="eg. 2014"
             name="batch"
-            value={state.batch || ''}
+            value={state.batch}
             onChange={onChange}
           />
         </FormControl>
@@ -51,7 +51,7 @@ function Ceremonial({ onChange, state }) {
             type={'number'}
             placeholder="0"
             name="guest"
-            value={state.guest || ''}
+            value={state.guest}
             onChange={onChange}
           />
         </InputGroup>
@@ -67,7 +67,7 @@ function Ceremonial({ onChange, state }) {
           variant="filled"
           textTransform={'initial'}
           name="size"
-          value={state.size || ''}
+          value={state.size}
           onChange={onChange}
         >
           {shirt_size.map(({ title, value }) => (
@@ -85,7 +85,7 @@ function Ceremonial({ onChange, state }) {
           <Input
             placeholder="eg. Bsc in CSE"
             name="qualification"
-            value={state.qualification || ''}
+            value={state.qualification}
             onChange={onChange}
           />
         </FormControl>
@@ -98,7 +98,7 @@ function Ceremonial({ onChange, state }) {
           <Input
             placeholder="eg. National University"
             name="institute"
-            value={state.institute || ''}
+            value={state.institute}
             onChange={onChange}
           />
         </FormControl>
@@ -112,7 +112,7 @@ function Ceremonial({ onChange, state }) {
             placeholder="Other information"
             variant="filled"
             name="others"
-            value={state.others || ''}
+            value={state.others}
             onChange={onChange}
           />
         </InputGroup>
