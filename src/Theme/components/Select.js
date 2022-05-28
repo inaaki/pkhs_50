@@ -5,14 +5,15 @@ const Select = {
     },
   },
   variants: {
-    filled: ({ colorScheme: c }) => {
-      return {
-        field: {
-          _focus: {
-            borderColor: `${c}.500`,
-          },
+    filled: {
+      field: {
+        _focus: {
+          borderColor: 'primary',
         },
-      };
+        _invalid: {
+          borderColor: 'error',
+        },
+      },
     },
   },
   defaultProps: {

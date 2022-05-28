@@ -5,10 +5,10 @@ const Input = {
         color: 'textHighlight',
         fontWeight: '500',
         _focus: {
-          borderColor: 'brand.500',
+          borderColor: 'primary',
         },
         _invalid: {
-          borderColor: 'red.400',
+          borderColor: 'error',
         },
         _placeholder: {
           fontWeight: '400',
