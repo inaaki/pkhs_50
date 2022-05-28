@@ -20,8 +20,11 @@ const VStack = chakra(VerticalStack, {
   },
 });
 
-function Payment({ state, onChange, guest, batch }) {
-  const method = state.paymentMethod;
+function Payment({ currentPart, state, onChange }) {
+  const { guest, batch } = state.ceremonial;
+  state = state[currentPart];
+  const { paymentMethod: method } = state;
+
   //
   const ownFee = batch < 2014 ? fees.big : fees.small;
   const guestFee = fees.guest * guest;

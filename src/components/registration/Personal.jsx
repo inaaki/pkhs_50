@@ -16,7 +16,8 @@ import Asterisk from './Asterisk';
 const blood_group = ['a+', 'a-', 'b+', 'b-', 'ab+', 'ab-', 'o+', 'o-'];
 const religion = ['islam', 'hindu', 'christianity', 'others'];
 
-function Personal({ onChange, state }) {
+function Personal({ currentPart, state, onChange }) {
+  state = state[currentPart];
   return (
     <SimpleGrid
       columns={{ base: 1, md: 2 }}

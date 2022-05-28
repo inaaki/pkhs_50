@@ -13,13 +13,16 @@ import {
 import React from 'react';
 import Asterisk from './Asterisk';
 
-function Ceremonial({ onChange, state }) {
+function Ceremonial({ currentPart, state, onChange }) {
+  state = state[currentPart];
+
   const shirt_size = [
     { title: 'Medium (MD)', value: 'md' },
     { title: 'Large (LG)', value: 'lg' },
     { title: 'Extra Large (XL)', value: 'xl' },
     { title: 'Extra Extra Large (XXL)', value: 'xxl' },
   ];
+
   return (
     <SimpleGrid
       columns={{ base: 1, md: 2 }}

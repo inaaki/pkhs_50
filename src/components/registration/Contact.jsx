@@ -8,7 +8,9 @@ import {
 import React from 'react';
 import Asterisk from './Asterisk';
 
-function Contact({ onChange, state }) {
+function Contact({ currentPart, onChange, state }) {
+  state = state[currentPart];
+
   return (
     <SimpleGrid
       columns={{ base: 1, md: 2 }}

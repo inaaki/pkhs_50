@@ -128,9 +128,8 @@ function Registration() {
           <chakra.form w="full" onSubmit={handleSubmit}>
             {elements[categoryIndex].element({
               onChange: handleChange,
-              state: state[currentPart],
-              guest: state.ceremonial.guest,
-              batch: state.ceremonial.batch,
+              state,
+              currentPart,
             })}
 
             <Buttons
