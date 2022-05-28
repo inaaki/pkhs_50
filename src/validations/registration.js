@@ -1,24 +1,9 @@
-import { number, object, string } from 'yup';
-
-const errMsg = {
-  required: 'This field cannot be empty',
-  batch: 'Please, provide a valid batch number',
-  max: 'Maximum character limit is ${max}',
-  number: 'Please, provide a valid number',
-  mobile11: 'Please, provide a Bangladeshi 11 digit mobile number',
-};
-
-/* --------- reusable schema -------- */
-const limitedString = string().trim().max(30, errMsg.max);
-const requiredString = limitedString.required(errMsg.required);
-const optionalString = limitedString.optional();
-const safeNumber = number().transform(value => (isNaN(value) ? 0 : value));
-const mobileNumber = string()
-  .min(11, errMsg.mobile11)
-  .max(11, errMsg.mobile11)
-  .nullable()
-  .transform(value => (!!value ? value : null));
-
+import { object } from 'yup';
+import errMsg from './errorMessage';
+import partialSchema from './partialSchema';
+//
+const { optionalString, requiredString, mobileNumber, safeNumber } =
+  partialSchema;
 /* --------- schema objects --------- */
 const personal = object({
   banglaName: optionalString,
