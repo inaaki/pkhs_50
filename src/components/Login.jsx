@@ -6,6 +6,7 @@ import {
   chakra,
   Divider,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Heading,
   Input,
@@ -18,9 +19,15 @@ import {
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { submitData } from '../utils/fakeApi';
+import { login, validation } from '../validations';
 import Thunder from './icons/Thunder';
 
 function Login() {
+  const [state, setState] = useState({
+    phone: '',
+    password: '',
+  });
+  const [error, setError] = useState({});
   const [isShow, setIsShow] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast({
@@ -29,28 +36,61 @@ function Login() {
     duration: 5000,
   });
 
+  //handle change function
+  const handleChange = e => {
+    let { name, value } = e.target;
+    if (value.includes('  ')) {
+      value = value.replace(/\s\s+/g, ' ');
+    }
+    const newState = { ...state };
+    newState[name] = value;
+    setState(newState);
+    console.log('state', newState);
+  };
+
+  //handle focus out
+  const handleBlur = () => {
+    validation(login, state)
+      .then(r => {
+        console.log(r);
+        setError({});
+      })
+      .catch(e => setError(e));
+  };
+
+  //handle submit
   const handleSubmit = async e => {
     e.preventDefault();
-    setIsLoading(true);
+
     try {
-      const result = await submitData(true);
-      console.log(result);
-      toast({
-        status: 'success',
-        title: 'Login successful',
-        description: "We've successfully logged you in",
-        variant: 'solid',
-      });
+      await validation(login, state);
+      setError({});
+      //
+      setIsLoading(true);
+      try {
+        //will be replaced by real rest-api
+        const result = await submitData(false);
+        console.log(result);
+        toast({
+          status: 'success',
+          title: 'Login successful',
+          description: "We've successfully logged you in",
+          variant: 'solid',
+        });
+      } catch (e) {
+        console.log(e);
+        toast({
+          status: 'error',
+          title: 'Error occurred',
+          description: 'Sorry, we were unable to log you in',
+          variant: 'solid',
+        });
+      } finally {
+        setIsLoading(false);
+      }
     } catch (e) {
+      setError(e);
       console.log(e);
-      toast({
-        status: 'error',
-        title: 'Error occurred',
-        description: 'Sorry, we were unable to log you in',
-        variant: 'solid',
-      });
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -77,7 +117,7 @@ function Login() {
           <Divider />
           <form onSubmit={handleSubmit}>
             <VStack spacing={6}>
-              <FormControl>
+              <FormControl isInvalid={error.phone}>
                 <FormLabel htmlFor="login_phone">Phone Number</FormLabel>
                 <InputGroup>
                   <InputLeftElement
@@ -89,17 +129,22 @@ function Login() {
                     _placeholder={{ fontSize: { base: 'sm', md: 'md' } }}
                     disabled={isLoading}
                     id="login_phone"
-                    name="number"
                     placeholder="Enter your Phone Number"
                     size={'lg'}
-                    type={'number'}
                     variant="filled"
+                    //
+                    type="number"
+                    name="phone"
+                    value={state.phone}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                   />
                 </InputGroup>
+                <FormErrorMessage>{error.phone}</FormErrorMessage>
               </FormControl>
 
               {/* password field */}
-              <FormControl>
+              <FormControl isInvalid={error.password}>
                 <FormLabel htmlFor="login_pass">Password</FormLabel>
                 <InputGroup>
                   <InputLeftElement
@@ -111,11 +156,15 @@ function Login() {
                     _placeholder={{ fontSize: { base: 'sm', md: 'md' } }}
                     disabled={isLoading}
                     id="login_pass"
-                    name="password"
                     placeholder="Enter your Password"
                     size={'lg'}
-                    type={isShow ? 'text' : 'password'}
                     variant="filled"
+                    //
+                    type={isShow ? 'text' : 'password'}
+                    name="password"
+                    value={state.password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                   />
                   <InputRightElement
                     boxSize={12}
@@ -131,6 +180,7 @@ function Login() {
                     }}
                   />
                 </InputGroup>
+                <FormErrorMessage>{error.password}</FormErrorMessage>
               </FormControl>
               <Center pt={3}>
                 <Button
@@ -138,9 +188,6 @@ function Login() {
                   loadingText="logging in"
                   size={'form'}
                   type="submit"
-                  onClick={() => {
-                    console.log('clicked');
-                  }}
                 >
                   Log in
                 </Button>
