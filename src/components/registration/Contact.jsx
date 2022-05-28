@@ -1,5 +1,6 @@
 import {
   FormControl,
+  FormErrorMessage,
   FormLabel,
   GridItem,
   Input,
@@ -8,7 +9,7 @@ import {
 import React from 'react';
 import Asterisk from './Asterisk';
 
-function Contact({ currentPart, onChange, state }) {
+function Contact({ currentPart, state, error, onBlur, onChange }) {
   state = state[currentPart];
 
   return (
@@ -20,7 +21,7 @@ function Contact({ currentPart, onChange, state }) {
     >
       {/* village name */}
       <GridItem colSpan={1}>
-        <FormControl>
+        <FormControl isInvalid={error.village}>
           <FormLabel>
             village: <Asterisk />
           </FormLabel>
@@ -29,13 +30,15 @@ function Contact({ currentPart, onChange, state }) {
             name="village"
             value={state.village}
             onChange={onChange}
+            onBlur={onBlur}
           />
+          <FormErrorMessage>{error.village}</FormErrorMessage>
         </FormControl>
       </GridItem>
 
       {/* post office */}
       <GridItem colSpan={1}>
-        <FormControl>
+        <FormControl isInvalid={error.postOffice}>
           <FormLabel>
             post office
             <Asterisk />
@@ -45,13 +48,15 @@ function Contact({ currentPart, onChange, state }) {
             name="postOffice"
             value={state.postOffice}
             onChange={onChange}
+            onBlur={onBlur}
           />
+          <FormErrorMessage>{error.postOffice}</FormErrorMessage>
         </FormControl>
       </GridItem>
 
       {/* upazila */}
       <GridItem colSpan={1}>
-        <FormControl>
+        <FormControl isInvalid={error.upazila}>
           <FormLabel>
             upazila
             <Asterisk />
@@ -61,13 +66,15 @@ function Contact({ currentPart, onChange, state }) {
             name="upazila"
             value={state.upazila}
             onChange={onChange}
+            onBlur={onBlur}
           />
+          <FormErrorMessage>{error.upazila}</FormErrorMessage>
         </FormControl>
       </GridItem>
 
       {/* dist */}
       <GridItem colSpan={1}>
-        <FormControl>
+        <FormControl isInvalid={error.district}>
           <FormLabel>
             district
             <Asterisk />
@@ -77,30 +84,15 @@ function Contact({ currentPart, onChange, state }) {
             name="district"
             value={state.district}
             onChange={onChange}
+            onBlur={onBlur}
           />
+          <FormErrorMessage>{error.district}</FormErrorMessage>
         </FormControl>
       </GridItem>
 
-      {/* mobile */}
+      {/* emergency mobile */}
       <GridItem colSpan={1}>
-        <FormControl>
-          <FormLabel>
-            mobile
-            <Asterisk />
-          </FormLabel>
-          <Input
-            type={'number'}
-            placeholder="Enter your mobile number"
-            name="mobile"
-            value={state.mobile}
-            onChange={onChange}
-          />
-        </FormControl>
-      </GridItem>
-
-      {/* mobile */}
-      <GridItem colSpan={1}>
-        <FormControl>
+        <FormControl isInvalid={error.emergencyMobile}>
           <FormLabel>emergency mobile number</FormLabel>
           <Input
             type={'number'}
@@ -108,7 +100,9 @@ function Contact({ currentPart, onChange, state }) {
             name="emergencyMobile"
             value={state.emergencyMobile}
             onChange={onChange}
+            onBlur={onBlur}
           />
+          <FormErrorMessage>{error.emergencyMobile}</FormErrorMessage>
         </FormControl>
       </GridItem>
 
@@ -121,7 +115,9 @@ function Contact({ currentPart, onChange, state }) {
             name="email"
             value={state.email}
             onChange={onChange}
+            onBlur={onBlur}
           />
+          <FormErrorMessage>{error.email}</FormErrorMessage>
         </FormControl>
       </GridItem>
     </SimpleGrid>

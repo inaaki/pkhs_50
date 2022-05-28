@@ -3,6 +3,8 @@ import {
   chakra,
   Divider,
   Flex,
+  FormControl,
+  FormErrorMessage,
   HStack,
   Input,
   Radio,
@@ -10,7 +12,7 @@ import {
   Text,
   VStack as VerticalStack,
 } from '@chakra-ui/react';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { fees } from '../../data';
 import Asterisk from './Asterisk';
 
@@ -20,10 +22,10 @@ const VStack = chakra(VerticalStack, {
   },
 });
 
-function Payment({ currentPart, state, onChange }) {
+function Payment({ currentPart, error, state, onChange, onBlur }) {
   const { guest, batch } = state.ceremonial;
   state = state[currentPart];
-  const { paymentMethod: method } = state;
+  const { paymentMethod } = state;
 
   //
   const ownFee = batch < 2014 ? fees.big : fees.small;
@@ -55,7 +57,7 @@ function Payment({ currentPart, state, onChange }) {
       <VStack align="flex-start" spacing={5}>
         <Heading title="Registration Payment" isRequired />
         <VStack align="flex-start" spacing={3.5}>
-          <RadioGroup name="paymentMethod" value={method}>
+          <RadioGroup name="paymentMethod" value={paymentMethod}>
             <HStack spacing={8}>
               {['bkash', 'bank'].map(item => (
                 <Radio
@@ -73,13 +75,15 @@ function Payment({ currentPart, state, onChange }) {
             w="full"
             p={5}
             borderRadius="md"
-            bg={method === 'bkash' ? 'brand.500' : 'teal.500'}
+            bg={paymentMethod === 'bkash' ? 'brand.500' : 'teal.500'}
             color="white"
           >
             <PaymentDetails
               amount={total}
-              method={method}
+              paymentMethod={paymentMethod}
               state={state}
+              error={error}
+              onBlur={onBlur}
               onChange={onChange}
             />
           </Box>
@@ -89,7 +93,14 @@ function Payment({ currentPart, state, onChange }) {
   );
 }
 
-function PaymentDetails({ amount, method, state, onChange }) {
+function PaymentDetails({
+  amount,
+  error,
+  onBlur,
+  onChange,
+  paymentMethod,
+  state,
+}) {
   const bkashDetails = useMemo(
     () => (
       <>
@@ -135,18 +146,22 @@ function PaymentDetails({ amount, method, state, onChange }) {
   return (
     <>
       Please, pay <chakra.span fontSize={'lg'}>{amount}tk</chakra.span> only.
-      {method === 'bkash' ? bkashDetails : bankDetails}
-      <Input
-        placeholder="Enter your Transaction ID"
-        mt={5}
-        _focus={{
-          bg: 'white',
-          borderColor: 'brand.700',
-        }}
-        name="paymentId"
-        value={state.paymentId}
-        onChange={onChange}
-      />
+      {paymentMethod === 'bkash' ? bkashDetails : bankDetails}
+      <FormControl isInvalid={error.paymentId}>
+        <Input
+          placeholder="Enter your Transaction ID"
+          mt={5}
+          _focus={{
+            bg: 'white',
+            borderColor: 'brand.700',
+          }}
+          name="paymentId"
+          value={state.paymentId}
+          onChange={onChange}
+          onBlur={onBlur}
+        />
+        <FormErrorMessage>{error.paymentId}</FormErrorMessage>
+      </FormControl>
     </>
   );
 }

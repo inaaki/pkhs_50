@@ -1,6 +1,7 @@
 import {
   chakra,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   GridItem,
   Input,
@@ -13,7 +14,7 @@ import {
 import React from 'react';
 import Asterisk from './Asterisk';
 
-function Ceremonial({ currentPart, state, onChange }) {
+function Ceremonial({ currentPart, error, onBlur, state, onChange }) {
   state = state[currentPart];
 
   const shirt_size = [
@@ -31,7 +32,7 @@ function Ceremonial({ currentPart, state, onChange }) {
     >
       {/* batch number */}
       <GridItem colSpan={1}>
-        <FormControl>
+        <FormControl isInvalid={error.batch}>
           <FormLabel>
             Passing Year / SSC Batch: <Asterisk />
           </FormLabel>
@@ -41,84 +42,102 @@ function Ceremonial({ currentPart, state, onChange }) {
             name="batch"
             value={state.batch}
             onChange={onChange}
+            onBlur={onBlur}
           />
+          <FormErrorMessage>{error.batch}</FormErrorMessage>
         </FormControl>
       </GridItem>
 
       {/* guest number */}
       <GridItem colSpan={1}>
-        <FormLabel>Number of Guest:</FormLabel>
-        <InputGroup>
-          <InputLeftAddon children="You (1)+" pointerEvents="none" />
-          <Input
-            type={'number'}
-            placeholder="0"
-            name="guest"
-            value={state.guest}
-            onChange={onChange}
-          />
-        </InputGroup>
+        <FormControl isInvalid={error.guest}>
+          <FormLabel>Number of Guest:</FormLabel>
+          <InputGroup>
+            <InputLeftAddon children="You (1)+" pointerEvents="none" />
+            <Input
+              type={'number'}
+              placeholder="0"
+              name="guest"
+              value={state.guest}
+              onChange={onChange}
+              onBlur={onBlur}
+            />
+          </InputGroup>
+          <FormErrorMessage>{error.guest}</FormErrorMessage>
+        </FormControl>
       </GridItem>
 
       {/* t-shirt size*/}
       <GridItem colSpan={1}>
-        <FormLabel>
-          T-Shirt Size: <Asterisk />
-        </FormLabel>
-        <Select
-          placeholder="Choose your T-Shirt size"
-          variant="filled"
-          textTransform={'initial'}
-          name="size"
-          value={state.size}
-          onChange={onChange}
-        >
-          {shirt_size.map(({ title, value }) => (
-            <chakra.option key={value} value={value}>
-              {title}
-            </chakra.option>
-          ))}
-        </Select>
+        <FormControl isInvalid={error.size}>
+          <FormLabel>
+            T-Shirt Size: <Asterisk />
+          </FormLabel>
+          <Select
+            placeholder="Choose your T-Shirt size"
+            variant="filled"
+            textTransform={'initial'}
+            name="size"
+            value={state.size}
+            onChange={onChange}
+            onBlur={onBlur}
+          >
+            {shirt_size.map(({ title, value }) => (
+              <chakra.option key={value} value={value}>
+                {title}
+              </chakra.option>
+            ))}
+          </Select>
+          <FormErrorMessage>{error.size}</FormErrorMessage>
+        </FormControl>
       </GridItem>
 
       {/* qualification */}
       <GridItem colSpan={1}>
-        <FormControl>
+        <FormControl isInvalid={error.qualification}>
           <FormLabel>Last Educational Qualification:</FormLabel>
           <Input
             placeholder="eg. Bsc in CSE"
             name="qualification"
             value={state.qualification}
             onChange={onChange}
+            onBlur={onBlur}
           />
+          <FormErrorMessage>{error.qualification}</FormErrorMessage>
         </FormControl>
       </GridItem>
 
       {/* institute name */}
       <GridItem colSpan={1}>
-        <FormControl>
+        <FormControl isInvalid={error.institute}>
           <FormLabel>Last Educational Institute:</FormLabel>
           <Input
             placeholder="eg. National University"
             name="institute"
             value={state.institute}
             onChange={onChange}
+            onBlur={onBlur}
           />
+          <FormErrorMessage>{error.institute}</FormErrorMessage>
         </FormControl>
       </GridItem>
 
       {/* others */}
       <GridItem colSpan={1}>
-        <FormLabel>Others:</FormLabel>
-        <InputGroup>
-          <Textarea
-            placeholder="Other information"
-            variant="filled"
-            name="others"
-            value={state.others}
-            onChange={onChange}
-          />
-        </InputGroup>
+        <FormControl isInvalid={error.others}>
+          <FormLabel>Others:</FormLabel>
+          <InputGroup>
+            <Textarea
+              placeholder="Other information"
+              variant="filled"
+              name="others"
+              value={state.others}
+              onChange={onChange}
+              onBlur={onBlur}
+            />
+          </InputGroup>
+          <FormErrorMessage>{error.others}</FormErrorMessage>
+        </FormControl>
       </GridItem>
     </SimpleGrid>
   );

@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 import React, { useMemo, useState } from 'react';
 import withBackground from '../../hoc/withBackground';
-import { validation, registrationSchema } from '../../validations';
+import { registrationSchema, validation } from '../../validations';
 import Card from '../Card';
 import Ceremonial from './Ceremonial';
 import Contact from './Contact';
@@ -68,7 +68,7 @@ function Registration() {
   const [categoryIndex, setCategoryIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState(initialState);
-  const [errors, setErrors] = useState({});
+  const [error, setError] = useState({});
   const currentPart = elements[categoryIndex].title;
 
   //submit function
@@ -89,7 +89,7 @@ function Registration() {
       })
       .catch(e => {
         console.log(e);
-        setErrors(e);
+        setError(e);
         setLoading(false);
       });
   };
@@ -106,18 +106,24 @@ function Registration() {
     const newState = { ...state };
     newState[currentPart][name] = value;
     setState(newState);
+    console.log('state', newState);
   };
 
   const handleNext = () => {
     validation(registrationSchema[currentPart], state[currentPart])
       .then(r => {
+        setError({});
         setCategoryIndex(state => state + 1);
-        console.log(r);
       })
       .catch(e => {
-        console.log(e);
-        setErrors(e);
+        setError(e);
       });
+  };
+
+  const handleBlur = e => {
+    validation(registrationSchema[currentPart], state[currentPart])
+      .then(e => setError({}))
+      .catch(e => setError(e));
   };
 
   return (
@@ -127,9 +133,11 @@ function Registration() {
           <FormHeading title={elements[categoryIndex].title + ' information'} />
           <chakra.form w="full" onSubmit={handleSubmit}>
             {elements[categoryIndex].element({
-              onChange: handleChange,
-              state,
               currentPart,
+              error,
+              state,
+              onChange: handleChange,
+              onBlur: handleBlur,
             })}
 
             <Buttons

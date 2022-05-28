@@ -5,14 +5,19 @@ const errMsg = {
   batch: 'Please, provide a valid batch number',
   max: 'Maximum character limit is ${max}',
   number: 'Please, provide a valid number',
+  mobile11: 'Please, provide a Bangladeshi 11 digit mobile number',
 };
 
 /* --------- reusable schema -------- */
 const limitedString = string().trim().max(30, errMsg.max);
 const requiredString = limitedString.required(errMsg.required);
 const optionalString = limitedString.optional();
-
 const safeNumber = number().transform(value => (isNaN(value) ? 0 : value));
+const mobileNumber = string()
+  .min(11, errMsg.mobile11)
+  .max(11, errMsg.mobile11)
+  .nullable()
+  .transform(value => (!!value ? value : null));
 
 /* --------- schema objects --------- */
 const personal = object({
@@ -31,8 +36,7 @@ const personal = object({
 const contact = object({
   district: requiredString,
   email: optionalString.email('Please provide a valid email address'),
-  emergencyMobile: optionalString,
-  mobile: requiredString,
+  emergencyMobile: mobileNumber,
   postOffice: requiredString,
   upazila: requiredString,
   village: requiredString,
