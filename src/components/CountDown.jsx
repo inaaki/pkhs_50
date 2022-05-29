@@ -39,7 +39,7 @@ function CountDown() {
   }, []);
 
   return (
-    <Center py={{ base: 10, md: 20 }} border="1px">
+    <Center py={{ base: 10, md: 20 }}>
       <VStack spacing={{ base: 5, md: 8, lg: 10 }}>
         <Heading size={'xl'} textTransform="capitalize" color={'gray.600'}>
           <Lighting color="brand.500" /> happening in...

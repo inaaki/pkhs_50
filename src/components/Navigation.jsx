@@ -1,10 +1,4 @@
-import {
-  Link,
-  Slide,
-  Stack,
-  useBreakpointValue,
-  VStack,
-} from '@chakra-ui/react';
+import { HStack, Link, Slide, Stack, VStack } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { enableScroll } from '../utils/scroll';
 import User from './User';
@@ -36,22 +30,16 @@ export function DesktopNav() {
     enableScroll();
   }, []);
 
-  const responsiveDirection = useBreakpointValue({
-    base: 'column',
-    lg: 'row',
-  });
   return (
-    <Stack
+    <HStack
       //flex-grow=1 for menu centering
       flexGrow={{ base: 0, lg: 1 }}
       align="center"
-      direction={responsiveDirection}
-      py={responsiveDirection === 'column' ? 4 : 0}
       spacing={4}
     >
       <NavItems fontSize={['md', 'md', 'sm', 'md']} />
       <User />
-    </Stack>
+    </HStack>
   );
 }
 

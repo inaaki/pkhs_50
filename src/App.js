@@ -1,22 +1,35 @@
 import React from 'react';
-import Hero from './components/Hero';
-import Nav from './components/Nav';
+import { Route, Routes } from 'react-router-dom';
+import Layout from './components/Layout';
+import Login from './components/Login';
+import SignUp from './components/SignUp';
+import Home from './routes/Home';
+import PublicRoute from './routes/PublicRoute';
 
 function App() {
   return (
     <Layout>
-      <Hero />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="signup"
+          element={
+            <PublicRoute>
+              <SignUp />
+            </PublicRoute>
+          }
+        />
+      </Routes>
     </Layout>
   );
 }
 
 export default App;
-
-function Layout({ children }) {
-  return (
-    <>
-      <Nav />
-      {children}
-    </>
-  );
-}

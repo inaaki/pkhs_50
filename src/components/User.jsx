@@ -1,17 +1,22 @@
 import { Avatar, Button, HStack, useBreakpointValue } from '@chakra-ui/react';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import SignIn from './icons/SignIn';
 import SignUp from './icons/SignUp';
 
-export default function User({ user }) {
+export default function User() {
+  //will be replaced by context
+  const user = true;
+
   return (
     <HStack spacing={[20, null, 5, 5, 10]}>
-      {user || false ? <LoggedIn /> : <LoggedOut />}
+      {user ? <LoggedIn /> : <LoggedOut />}
     </HStack>
   );
 }
 //
 function LoggedIn() {
+  const navigate = useNavigate();
   const responsiveSize = useBreakpointValue({
     base: 'md',
     md: 'sm',
@@ -19,7 +24,11 @@ function LoggedIn() {
   });
   return (
     <>
-      <Button variant={'solid'} size={responsiveSize}>
+      <Button
+        variant={'solid'}
+        size={responsiveSize}
+        onClick={() => navigate('/dashboard')}
+      >
         DashBoard
       </Button>
       <Avatar
@@ -30,11 +39,21 @@ function LoggedIn() {
   );
 }
 function LoggedOut() {
+  const navigate = useNavigate();
   const buttons = [
-    { title: 'log in', variant: 'outline', icon: <SignIn /> },
-    { title: 'sign up', variant: 'solid', icon: <SignUp /> },
+    {
+      title: 'log in',
+      variant: 'outline',
+      icon: <SignIn />,
+      route: 'login',
+    },
+    {
+      title: 'sign up',
+      variant: 'solid',
+      icon: <SignUp />,
+      route: 'signup',
+    },
   ];
-
   const responsiveSize = useBreakpointValue({
     base: 'md',
     md: 'sm',
@@ -42,13 +61,14 @@ function LoggedOut() {
   });
   return (
     <>
-      {buttons.map(({ title, icon, variant }, index) => (
+      {buttons.map(({ title, icon, variant, route }) => (
         <Button
-          key={title + index}
-          size={responsiveSize}
-          leftIcon={icon}
-          variant={variant}
           iconSpacing={2}
+          key={title}
+          leftIcon={icon}
+          size={responsiveSize}
+          variant={variant}
+          onClick={() => navigate(route)}
         >
           {title}
         </Button>
