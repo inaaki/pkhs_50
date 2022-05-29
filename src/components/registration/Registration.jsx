@@ -6,13 +6,16 @@ import {
   chakra,
   Divider,
   Heading,
+  Text,
   useMediaQuery,
   VStack,
 } from '@chakra-ui/react';
 import React, { useMemo, useState } from 'react';
 import withBackground from '../../hoc/withBackground';
+import { nestedToSingleObject } from '../../utils/object';
 import { registrationSchema, validation } from '../../validations';
 import Card from '../Card';
+import DisplayData from '../DisplayData';
 import Ceremonial from './Ceremonial';
 import Contact from './Contact';
 import Payment from './Payment';
@@ -62,6 +65,7 @@ function Registration() {
       { title: 'contact', element: props => <Contact {...props} /> },
       { title: 'ceremonial', element: props => <Ceremonial {...props} /> },
       { title: 'payment', element: props => <Payment {...props} /> },
+      { title: 'review' },
     ],
     []
   );
@@ -129,26 +133,29 @@ function Registration() {
   return (
     <Center p={{ base: 4, md: 10 }} py={10} minH="100vh">
       <Card w="full" maxW={{ base: 'lg', md: '3xl' }} variant="form">
-        <VStack spacing={10}>
-          <FormHeading title={elements[categoryIndex].title + ' information'} />
-          <chakra.form w="full" onSubmit={handleSubmit}>
-            {elements[categoryIndex].element({
+        <chakra.form w="full" onSubmit={handleSubmit}>
+          <FormHeading title={elements[categoryIndex].title} />
+
+          {elements[categoryIndex].title === 'review' ? (
+            <DisplayData data={nestedToSingleObject(state)} />
+          ) : (
+            elements[categoryIndex].element({
               currentPart,
               error,
               state,
               onChange: handleChange,
               onBlur: handleBlur,
-            })}
+            })
+          )}
 
-            <Buttons
-              categoryIndex={categoryIndex}
-              setCategoryIndex={setCategoryIndex}
-              targetLength={elements.length - 1}
-              loading={loading}
-              handleNext={handleNext}
-            />
-          </chakra.form>
-        </VStack>
+          <Buttons
+            categoryIndex={categoryIndex}
+            setCategoryIndex={setCategoryIndex}
+            targetLength={elements.length - 1}
+            loading={loading}
+            handleNext={handleNext}
+          />
+        </chakra.form>
       </Card>
     </Center>
   );
@@ -156,16 +163,24 @@ function Registration() {
 
 function FormHeading({ title }) {
   return (
-    <VStack w={'full'} align={{ base: 'center', sm: 'flex-start' }}>
-      <VStack>
+    <VStack w={'full'} align="flex-start" mb={10}>
+      <VStack align="flex-start">
         <Heading
           as={'h3'}
           variant="form-heading"
           fontSize={{ base: '2xl', sm: '4xl' }}
+          // textAlign='start'
         >
-          {title}
+          {title + ' information'}
         </Heading>
-        <RequiredLabel />
+        {title === 'review' ? (
+          <Text>
+            &#40;Please, review before submit. You can always go back for
+            correction&#41;
+          </Text>
+        ) : (
+          <RequiredLabel />
+        )}
       </VStack>
       <Divider />
     </VStack>
