@@ -12,6 +12,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import React, { useMemo, useState } from 'react';
+import { reach } from 'yup';
 import withBackground from '../../hoc/withBackground';
 import { submitData } from '../../utils/fakeApi';
 import { cloneDeepObject, nestedToSingleObject } from '../../utils/object';
@@ -136,11 +137,15 @@ function Registration() {
   };
 
   const handleBlur = e => {
-    //todo:
-    //fix: to single validation
-    validation(registrationSchema[currentPart], state[currentPart])
-      .then(e => setError({}))
-      .catch(e => setError(e));
+    const { name } = e.target;
+    reach(registrationSchema[currentPart], name)
+      .validate(state[currentPart][name])
+      .then(r => {
+        setError({ ...error, [name]: '' });
+      })
+      .catch(e => {
+        setError({ ...error, [name]: e.message });
+      });
   };
 
   return (

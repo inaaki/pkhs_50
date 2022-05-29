@@ -18,6 +18,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
+import { reach } from 'yup';
 import { submitData } from '../utils/fakeApi';
 import { login, validation } from '../validations';
 import Thunder from './icons/Thunder';
@@ -49,13 +50,16 @@ function Login() {
   };
 
   //handle focus out
-  const handleBlur = () => {
-    validation(login, state)
+  const handleBlur = e => {
+    const { name } = e.target;
+    reach(login, name)
+      .validate(state[name])
       .then(r => {
-        console.log(r);
-        setError({});
+        setError({ ...error, [name]: '' });
       })
-      .catch(e => setError(e));
+      .catch(e => {
+        setError({ ...error, [name]: e.message });
+      });
   };
 
   //handle submit
