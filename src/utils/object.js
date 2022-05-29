@@ -12,3 +12,15 @@ export function nestedToSingleObject(obj) {
   }
   return result;
 }
+
+export function cloneDeepObject(obj) {
+  const result = {};
+  for (let key in obj) {
+    if (isPlainObject(obj[key])) {
+      return { ...result, [key]: cloneDeepObject(obj[key]) };
+    } else {
+      result[key] = obj[key];
+    }
+  }
+  return result;
+}

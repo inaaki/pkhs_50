@@ -8,11 +8,13 @@ import {
   Heading,
   Text,
   useMediaQuery,
+  useToast,
   VStack,
 } from '@chakra-ui/react';
 import React, { useMemo, useState } from 'react';
 import withBackground from '../../hoc/withBackground';
-import { nestedToSingleObject } from '../../utils/object';
+import { submitData } from '../../utils/fakeApi';
+import { cloneDeepObject, nestedToSingleObject } from '../../utils/object';
 import { registrationSchema, validation } from '../../validations';
 import Card from '../Card';
 import DisplayData from '../DisplayData';
@@ -69,33 +71,43 @@ function Registration() {
     ],
     []
   );
+
+  const [state, setState] = useState(cloneDeepObject(initialState));
   const [categoryIndex, setCategoryIndex] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [state, setState] = useState(initialState);
   const [error, setError] = useState({});
+  const toast = useToast({
+    position: 'bottom',
+    isClosable: true,
+    duration: 5000,
+  });
   const currentPart = elements[categoryIndex].title;
 
   //submit function
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    //
-    validation(registrationSchema[currentPart], state[currentPart])
-      .then(r => {
-        console.log(r);
-        //
-        setLoading(true);
-        console.log('submitting');
-        setTimeout(() => {
-          setLoading(false);
-          setCategoryIndex(0);
-          setState({ ...initialState });
-        }, 5000);
-      })
-      .catch(e => {
-        console.log(e);
-        setError(e);
-        setLoading(false);
+
+    setLoading(true);
+    try {
+      await submitData(true);
+      toast({
+        status: 'success',
+        title: 'Registration successful',
+        description: "You've successfully submitted your data",
+        variant: 'solid',
       });
+      setCategoryIndex(0);
+      setState(initialState);
+    } catch (e) {
+      toast({
+        status: 'error',
+        title: 'Error occurred',
+        description: 'Sorry, we were unable to submit your data',
+        variant: 'solid',
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   //handle change function
@@ -110,7 +122,6 @@ function Registration() {
     const newState = { ...state };
     newState[currentPart][name] = value;
     setState(newState);
-    console.log('state', newState);
   };
 
   const handleNext = () => {
@@ -125,6 +136,8 @@ function Registration() {
   };
 
   const handleBlur = e => {
+    //todo:
+    //fix: to single validation
     validation(registrationSchema[currentPart], state[currentPart])
       .then(e => setError({}))
       .catch(e => setError(e));
