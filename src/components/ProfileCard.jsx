@@ -7,7 +7,10 @@ import {
   HStack,
   Text,
 } from '@chakra-ui/react';
-import QR from './QR';
+import React, { lazy, Suspense } from 'react';
+import SimpleLoader from './loader/SimpleLoader';
+//code splitting
+const QR = lazy(() => import('./QR'));
 
 //these will be replaced by rest api
 const src =
@@ -38,8 +41,10 @@ function ProfileCard() {
         <Badge colorScheme={colorScheme[1]}>Tickets: 3</Badge>
       </HStack>
 
-      <Center mt={7}>
-        <QR value={userId} />
+      <Center mt={7} minH={128}>
+        <Suspense fallback={<SimpleLoader />}>
+          <QR value={userId} />
+        </Suspense>
       </Center>
     </Box>
   );
