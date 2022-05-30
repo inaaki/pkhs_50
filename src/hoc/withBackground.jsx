@@ -1,8 +1,6 @@
-import { chakra } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import React from 'react';
 import bg from '../assets/svg/wave.svg';
-
-import { Box } from '@chakra-ui/react';
 
 function withBackground(Component) {
   const style = {

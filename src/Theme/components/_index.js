@@ -8,9 +8,11 @@ import Input from './Input';
 import Card from './Card';
 import Radio from './Radio';
 import Select from './Select';
+import Badge from './Badge';
 
 const Components = {
   components: {
+    Badge: Badge,
     Button: Button,
     Card: Card,
     FormLabel: FormLabel,
