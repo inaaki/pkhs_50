@@ -6,9 +6,10 @@ import { camelToMultiWords } from '../utils/convert';
 //e.g.: {name:'Inzamul',age:'24'} ==>ok
 //e.g.: {name:'Inzamul',address:{village:'pilgiri'}} ==>error
 
-function DisplayData({ data }) {
+function DisplayData({ data = {}, ...rest }) {
+  //data prop should be a non-nested object
   return (
-    <TableContainer>
+    <TableContainer {...rest}>
       <Table variant="striped" colorScheme="brand">
         <Tbody>
           {Object.keys(data).map(key =>

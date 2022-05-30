@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
+import DashBoard from './routes/DashBoard';
 import Home from './routes/Home';
 import PublicRoute from './routes/PublicRoute';
 
@@ -27,6 +28,7 @@ function App() {
             </PublicRoute>
           }
         />
+        <Route path="dashboard" element={<DashBoard />} />
       </Routes>
     </Layout>
   );

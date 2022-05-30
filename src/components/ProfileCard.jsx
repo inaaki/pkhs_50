@@ -29,7 +29,6 @@ function ProfileCard() {
       rounded={'lg'}
       textAlign={'center'}
       w={'full'}
-      m={20} //temporary for testing
     >
       <Avatar size={'xl'} src={src} alt={'Avatar Alt'} mb={4} />
       <Heading fontSize={'2xl'} fontFamily={'body'}>
