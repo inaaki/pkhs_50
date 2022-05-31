@@ -9,20 +9,28 @@ import { camelToMultiWords } from '../utils/convert';
 function DisplayData({ data = {}, ...rest }) {
   //data prop should be a non-nested object
   return (
-    <TableContainer {...rest}>
-      <Table variant="striped" colorScheme="brand">
-        <Tbody>
+    <TableContainer
+      {...rest}
+      bg="white"
+      border="1px"
+      borderColor="gray.200"
+      rounded="md"
+      p={5}
+    >
+      <Table
+        variant="striped"
+        colorScheme="brand"
+        textTransform="capitalize"
+        color="textHighlight"
+        fontSize="lg"
+        fontWeight="500"
+      >
+        <Tbody whiteSpace="nowrap">
           {Object.keys(data).map(key =>
             data[key] ? (
               <Tr key={key}>
                 {[camelToMultiWords(key), data[key]].map(item => (
-                  <Td
-                    key={item}
-                    textTransform={'capitalize'}
-                    color="textHighlight"
-                    fontSize="lg"
-                    fontWeight="500"
-                  >
+                  <Td key={item} whiteSpace="normal">
                     {item}
                   </Td>
                 ))}

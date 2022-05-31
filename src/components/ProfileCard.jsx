@@ -22,7 +22,7 @@ function ProfileCard() {
   return (
     <Box
       boxShadow={'2xl'}
-      maxW={'320px'}
+      maxW='xs'
       p={10}
       border="1px"
       borderColor="gray.200"

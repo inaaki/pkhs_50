@@ -8,7 +8,7 @@ function withBackground(Component) {
   };
 
   return props => (
-    <Center minH="100vh" sx={style}>
+    <Center minH={'calc(100vh - 67.5px)'} sx={style}>
       <Component {...props} />
     </Center>
   );

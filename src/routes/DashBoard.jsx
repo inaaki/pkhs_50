@@ -5,7 +5,7 @@ import ProfileCard from '../components/ProfileCard';
 import withBackground from '../hoc/withBackground';
 
 const data = {
-  name: 'inzamul',
+  name: 'mohammad inzamul haque akib',
   age: '35',
 };
 
@@ -14,18 +14,13 @@ function DashBoard() {
     <Flex
       gap={20}
       p={10}
+      pt={{ base: 14, md: 20 }}
       align="start"
       direction={{ base: 'column', md: 'row' }}
+      maxW={'7xl'}
     >
       <ProfileCard />
-      <DisplayData
-        border="1px"
-        borderColor="gray.200"
-        data={data}
-        flexGrow={1}
-        minW={{ base: 'auto', md: '2xl' }}
-        w="full"
-      />
+      <DisplayData data={data} minW={{ base: 'auto', lg: 'lg' }} />
     </Flex>
   );
 }
