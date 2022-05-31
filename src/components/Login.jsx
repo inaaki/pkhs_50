@@ -19,6 +19,7 @@ import {
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { reach } from 'yup';
+import withBackground from '../hoc/withBackground';
 import { submitData } from '../utils/fakeApi';
 import { login, validation } from '../validations';
 import Thunder from './icons/Thunder';
@@ -99,109 +100,113 @@ function Login() {
   };
 
   return (
-    <Center w="full" minH="100vh" p={10}>
-      <Box
-        borderRadius="md"
-        p={7}
-        py={10}
-        boxShadow="md"
-        border="1px"
-        borderColor="gray.100"
-      >
-        <VStack spacing={10}>
-          <VStack spacing={2}>
-            <Thunder color="brand.500" boxSize={10} />
-            <Heading as={'h3'} textAlign={'center'} fontSize={'3xl'}>
-              Login to your account
-            </Heading>
-            <chakra.span color="gray.400">
-              Don't have an account? <Link color={'brand.600'}>Sign Up</Link>
-            </chakra.span>
-          </VStack>
-          <Divider />
-          <form onSubmit={handleSubmit}>
-            <VStack spacing={6}>
-              <FormControl isInvalid={error.phone}>
-                <FormLabel htmlFor="login_phone">Phone Number</FormLabel>
-                <InputGroup>
-                  <InputLeftElement
-                    boxSize={12}
-                    children={<PhoneIcon color={'gray.400'} />}
-                    pointerEvents="none"
-                  />
-                  <Input
-                    _placeholder={{ fontSize: { base: 'sm', md: 'md' } }}
-                    disabled={isLoading}
-                    id="login_phone"
-                    placeholder="Enter your Phone Number"
-                    size={'lg'}
-                    variant="filled"
-                    //
-                    type="number"
-                    name="phone"
-                    value={state.phone}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
-                </InputGroup>
-                <FormErrorMessage>{error.phone}</FormErrorMessage>
-              </FormControl>
-
-              {/* password field */}
-              <FormControl isInvalid={error.password}>
-                <FormLabel htmlFor="login_pass">Password</FormLabel>
-                <InputGroup>
-                  <InputLeftElement
-                    boxSize={12}
-                    children={<UnlockIcon color={'gray.400'} />}
-                    pointerEvents="none"
-                  />
-                  <Input
-                    _placeholder={{ fontSize: { base: 'sm', md: 'md' } }}
-                    disabled={isLoading}
-                    id="login_pass"
-                    placeholder="Enter your Password"
-                    size={'lg'}
-                    variant="filled"
-                    //
-                    type={isShow ? 'text' : 'password'}
-                    name="password"
-                    value={state.password}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
-                  <InputRightElement
-                    boxSize={12}
-                    children={
-                      isShow ? (
-                        <ViewOffIcon color={'gray.400'} boxSize={5} />
-                      ) : (
-                        <ViewIcon color={'gray.400'} boxSize={5} />
-                      )
-                    }
-                    onClick={() => {
-                      setIsShow(state => !state);
-                    }}
-                  />
-                </InputGroup>
-                <FormErrorMessage>{error.password}</FormErrorMessage>
-              </FormControl>
-              <Center pt={3}>
-                <Button
-                  isLoading={isLoading}
-                  loadingText="logging in"
-                  size={'form'}
-                  type="submit"
-                >
-                  Log in
-                </Button>
-              </Center>
-            </VStack>
-          </form>
+    <Box
+      bg="white"
+      border="1px"
+      borderColor="gray.100"
+      borderRadius="md"
+      boxShadow="md"
+      m={4}
+      p={7}
+      py={10}
+    >
+      <VStack spacing={{ base: 5, md: 8 }}>
+        <VStack spacing={2}>
+          <Thunder color="brand.500" boxSize={10} />
+          <Heading
+            as={'h3'}
+            fontSize={{ base: '2xl', md: '3xl' }}
+            textAlign={'center'}
+          >
+            Login to your account
+          </Heading>
+          <chakra.span color="gray.400">
+            Don't have an account? <Link color={'brand.600'}>Sign Up</Link>
+          </chakra.span>
         </VStack>
-      </Box>
-    </Center>
+        <Divider />
+        <form onSubmit={handleSubmit}>
+          <VStack spacing={6}>
+            <FormControl isInvalid={error.phone}>
+              <FormLabel htmlFor="login_phone">Phone Number</FormLabel>
+              <InputGroup>
+                <InputLeftElement
+                  boxSize={12}
+                  children={<PhoneIcon color={'gray.400'} />}
+                  pointerEvents="none"
+                />
+                <Input
+                  _placeholder={{ fontSize: { base: 'sm', md: 'md' } }}
+                  disabled={isLoading}
+                  id="login_phone"
+                  placeholder="Enter your Phone Number"
+                  size={'lg'}
+                  variant="filled"
+                  //
+                  type="number"
+                  name="phone"
+                  value={state.phone}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </InputGroup>
+              <FormErrorMessage>{error.phone}</FormErrorMessage>
+            </FormControl>
+
+            {/* password field */}
+            <FormControl isInvalid={error.password}>
+              <FormLabel htmlFor="login_pass">Password</FormLabel>
+              <InputGroup>
+                <InputLeftElement
+                  boxSize={12}
+                  children={<UnlockIcon color={'gray.400'} />}
+                  pointerEvents="none"
+                />
+                <Input
+                  _placeholder={{ fontSize: { base: 'sm', md: 'md' } }}
+                  disabled={isLoading}
+                  id="login_pass"
+                  placeholder="Enter your Password"
+                  size={'lg'}
+                  variant="filled"
+                  //
+                  type={isShow ? 'text' : 'password'}
+                  name="password"
+                  value={state.password}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                <InputRightElement
+                  boxSize={12}
+                  children={
+                    isShow ? (
+                      <ViewOffIcon color={'gray.400'} boxSize={5} />
+                    ) : (
+                      <ViewIcon color={'gray.400'} boxSize={5} />
+                    )
+                  }
+                  onClick={() => {
+                    setIsShow(state => !state);
+                  }}
+                />
+              </InputGroup>
+              <FormErrorMessage>{error.password}</FormErrorMessage>
+            </FormControl>
+            <Center pt={3}>
+              <Button
+                isLoading={isLoading}
+                loadingText="logging in"
+                size={'form'}
+                type="submit"
+              >
+                Log in
+              </Button>
+            </Center>
+          </VStack>
+        </form>
+      </VStack>
+    </Box>
   );
 }
 
-export default Login;
+export default withBackground(Login);
