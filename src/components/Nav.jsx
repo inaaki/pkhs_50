@@ -12,7 +12,7 @@ function Nav() {
 
   useEffect(() => {
     const onScroll = () => {
-      if (window.scrollY > 60) {
+      if (window.scrollY > 50) {
         if (isSticky) return;
         setIsSticky(true);
       } else {
@@ -31,10 +31,7 @@ function Nav() {
   };
 
   return (
-    <Header
-      variant={isSticky ? 'secondary' : 'primary'}
-      size={isSticky ? '2xl' : 'full'}
-    >
+    <Header variant={isSticky ? 'secondary' : 'primary'}>
       <HStack
         justify={{
           base: 'space-between',

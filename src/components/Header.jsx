@@ -1,16 +1,15 @@
-import { chakra, useStyleConfig } from '@chakra-ui/react';
+import { Center, chakra, useMultiStyleConfig } from '@chakra-ui/react';
 import React from 'react';
 
-function Header({ children, variant, size, ...props }) {
-  const style = useStyleConfig('Header', {
+function Header({ children, variant }) {
+  const style = useMultiStyleConfig('Header', {
     variant: variant,
-    size: size,
   });
 
   return (
-    <chakra.header __css={style} {...props}>
-      {children}
-    </chakra.header>
+    <Center __css={style.container}>
+      <chakra.nav __css={style.nav}>{children}</chakra.nav>
+    </Center>
   );
 }
 
