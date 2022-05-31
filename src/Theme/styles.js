@@ -11,6 +11,7 @@ const styles = {
       },
       body: {
         color: 'text',
+        mt: '67.5px',//fixed nav height
       },
     },
   },

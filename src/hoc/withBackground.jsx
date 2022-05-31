@@ -5,8 +5,6 @@ import bg from '../assets/svg/wave.svg';
 function withBackground(Component) {
   const style = {
     background: `top/contain url(${bg}) no-repeat`,
-    backgroundOrigin: 'content-box',
-    pt: '67.5px',
   };
 
   return props => (

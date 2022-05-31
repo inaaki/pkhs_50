@@ -33,7 +33,7 @@ function Hero() {
   };
 
   return (
-    <chakra.section sx={sectionCss} mt="66.5px">
+    <chakra.section sx={sectionCss}>
       <Container maxW={'container.2xl'} p="10">
         <SimpleGrid
           alignItems="center"
