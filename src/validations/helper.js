@@ -1,4 +1,4 @@
-export default async (schema, target) => {
+const helper = async (schema, target) => {
   try {
     const result = await schema.validate(target, {
       abortEarly: false,
@@ -13,3 +13,5 @@ export default async (schema, target) => {
     return Promise.reject(newErrors);
   }
 };
+
+export default helper;

@@ -116,7 +116,7 @@ function Registration() {
     if (!state[currentPart]) {
       state[currentPart] = {};
     }
-    let { name, value, type } = e.target;
+    let { name, value } = e.target;
     if (value.includes('  ')) {
       value = value.replace(/\s\s+/g, ' ');
     }

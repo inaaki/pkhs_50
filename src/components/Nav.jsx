@@ -23,7 +23,7 @@ function Nav() {
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
-  }, []);
+  }, [isSticky]);
 
   const toggleNav = () => {
     !isOpen ? disableScroll() : enableScroll();

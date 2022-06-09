@@ -50,7 +50,6 @@ function Login() {
     const newState = { ...state };
     newState[name] = value;
     setState(newState);
-    console.log('state', newState);
   };
 
   //handle focus out
@@ -77,8 +76,7 @@ function Login() {
       setIsLoading(true);
       try {
         //will be replaced by real rest-api
-        const result = await submitData(true);
-        console.log(result);
+        await submitData(true);
         toast({
           status: 'success',
           title: 'Login successful',
@@ -90,7 +88,6 @@ function Login() {
           replace: true,
         });
       } catch (e) {
-        console.log(e);
         toast({
           status: 'error',
           title: 'Error occurred',
@@ -102,7 +99,6 @@ function Login() {
       }
     } catch (e) {
       setError(e);
-      console.log(e);
     }
   };
 

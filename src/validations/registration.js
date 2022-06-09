@@ -1,3 +1,4 @@
+/* eslint-disable no-template-curly-in-string */
 import { object } from 'yup';
 import errMsg from './errorMessage';
 import partialSchema from './partialSchema';

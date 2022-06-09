@@ -12,10 +12,12 @@ const mobileNumber = string()
   .nullable()
   .transform(value => (!!value ? value : null));
 
-export default {
+const partialSchemas = {
   limitedString,
   requiredString,
   optionalString,
   safeNumber,
   mobileNumber,
 };
+
+export default partialSchemas;

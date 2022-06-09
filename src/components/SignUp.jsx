@@ -48,7 +48,6 @@ function SignUp() {
     const newState = { ...state };
     newState[name] = value;
     setState(newState);
-    console.log('state', newState);
   };
 
   //handle focus out
@@ -75,8 +74,7 @@ function SignUp() {
       setIsLoading(true);
       try {
         //will be replaced by real rest-api
-        const result = await submitData(1);
-        console.log(result);
+        await submitData(1);
         toast({
           status: 'success',
           title: 'Login successful',
@@ -84,7 +82,6 @@ function SignUp() {
           variant: 'solid',
         });
       } catch (e) {
-        console.log(e);
         toast({
           status: 'error',
           title: 'Error occurred',
@@ -96,7 +93,6 @@ function SignUp() {
       }
     } catch (e) {
       setError(e);
-      console.log(e);
     }
   };
 
@@ -202,9 +198,7 @@ function SignUp() {
                 loadingText="signing up"
                 size={'form'}
                 type="submit"
-                onClick={() => {
-                  console.log('clicked');
-                }}
+                onClick={() => {}}
               >
                 sign up
               </Button>
