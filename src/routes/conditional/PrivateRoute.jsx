@@ -1,7 +1,7 @@
 import isEmpty from 'lodash/isEmpty';
 import React, { useContext } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { UserContext } from '../context/userContext';
+import { UserContext } from '../../context/userContext';
 
 function PrivateRoute({ children }) {
   const user = useContext(UserContext);

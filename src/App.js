@@ -6,8 +6,10 @@ import Registration from './components/registration/Registration';
 import SignUp from './components/SignUp';
 import DashBoard from './routes/DashBoard';
 import Home from './routes/Home';
-import PrivateRoute from './routes/PrivateRoute';
-import PublicRoute from './routes/PublicRoute';
+import PrivateRoute from './routes/conditional/PrivateRoute';
+import PublicRoute from './routes/conditional/PublicRoute';
+import RegisteredRoute from './routes/conditional/RegisteredRoute';
+import NonRegisteredRoute from './routes/conditional/NonRegisteredRoute';
 
 function App() {
   return (
@@ -34,7 +36,9 @@ function App() {
           path="dashboard"
           element={
             <PrivateRoute>
-              <DashBoard />
+              <RegisteredRoute>
+                <DashBoard />
+              </RegisteredRoute>
             </PrivateRoute>
           }
         />
@@ -42,7 +46,9 @@ function App() {
           path="registration"
           element={
             <PrivateRoute>
-              <Registration />
+              <NonRegisteredRoute>
+                <Registration />
+              </NonRegisteredRoute>
             </PrivateRoute>
           }
         />

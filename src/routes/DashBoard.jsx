@@ -1,9 +1,7 @@
 import { Flex } from '@chakra-ui/react';
-import React, { useContext } from 'react';
-import { Navigate } from 'react-router-dom';
+import React from 'react';
 import DisplayData from '../components/DisplayData';
 import ProfileCard from '../components/ProfileCard';
-import { UserContext } from '../context/userContext';
 import withBackground from '../hoc/withBackground';
 
 const data = {
@@ -12,9 +10,7 @@ const data = {
 };
 
 function DashBoard() {
-  const user = useContext(UserContext);
-
-  return user?.isRegistered ? (
+  return (
     <Flex
       gap={20}
       p={10}
@@ -26,8 +22,6 @@ function DashBoard() {
       <ProfileCard />
       <DisplayData data={data} minW={{ base: 'auto', lg: 'lg' }} />
     </Flex>
-  ) : (
-    <Navigate to={'/registration'} />
   );
 }
 
