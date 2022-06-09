@@ -1,7 +1,7 @@
 import { Avatar, Button, HStack, useBreakpointValue } from '@chakra-ui/react';
 import isEmpty from 'lodash/isEmpty';
 import React, { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/userContext';
 import SignIn from './icons/SignIn';
 import SignUp from './icons/SignUp';
@@ -11,13 +11,15 @@ export default function User() {
 
   return (
     <HStack spacing={[20, null, 5, 5, 10]}>
-      {isEmpty(user) ? <LoggedOut /> : <LoggedIn />}
+      {isEmpty(user) ? <LoggedOut /> : <LoggedIn user={user} />}
     </HStack>
   );
 }
 //
-function LoggedIn() {
-  const navigate = useNavigate();
+function LoggedIn({ user }) {
+  //will be replaced later with dynamic code
+  const isRegistered = user?.isRegistered;
+
   const responsiveSize = useBreakpointValue({
     base: 'md',
     md: 'sm',
@@ -25,13 +27,12 @@ function LoggedIn() {
   });
   return (
     <>
-      <Button
-        variant={'solid'}
-        size={responsiveSize}
-        onClick={() => navigate('/dashboard')}
-      >
-        DashBoard
-      </Button>
+      <RouterLink to={isRegistered ? '/dashboard' : '/registration'}>
+        <Button variant={'solid'} size={responsiveSize}>
+          {isRegistered ? 'DashBoard' : 'Register'}
+        </Button>
+      </RouterLink>
+
       <Avatar
         size={responsiveSize}
         src="https://picsum.phtos/id/1005/200/300"
