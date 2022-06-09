@@ -2,14 +2,15 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
 import Login from './components/Login';
+import NotFound from './components/NotFound';
 import Registration from './components/registration/Registration';
 import SignUp from './components/SignUp';
-import DashBoard from './routes/DashBoard';
-import Home from './routes/Home';
+import NonRegisteredRoute from './routes/conditional/NonRegisteredRoute';
 import PrivateRoute from './routes/conditional/PrivateRoute';
 import PublicRoute from './routes/conditional/PublicRoute';
 import RegisteredRoute from './routes/conditional/RegisteredRoute';
-import NonRegisteredRoute from './routes/conditional/NonRegisteredRoute';
+import DashBoard from './routes/DashBoard';
+import Home from './routes/Home';
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Layout>
   );
