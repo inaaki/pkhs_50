@@ -1,11 +1,12 @@
-import React from 'react';
+import isEmpty from 'lodash/isEmpty';
+import React, { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
+import { UserContext } from '../context/userContext';
 
 function PublicRoute({ children }) {
-  //isLoggedIn will be replaced by context
-  const isLoggedIn = false;
+  const user = useContext(UserContext);
 
-  return isLoggedIn ? <Navigate to="/" /> : <>{children}</>;
+  return isEmpty(user) ? <>{children}</> : <Navigate to="/" />;
 }
 
 export default PublicRoute;

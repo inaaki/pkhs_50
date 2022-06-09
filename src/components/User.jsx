@@ -1,16 +1,17 @@
 import { Avatar, Button, HStack, useBreakpointValue } from '@chakra-ui/react';
-import React from 'react';
+import isEmpty from 'lodash/isEmpty';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/userContext';
 import SignIn from './icons/SignIn';
 import SignUp from './icons/SignUp';
 
 export default function User() {
-  //will be replaced by context
-  const user = true;
+  const user = useContext(UserContext);
 
   return (
     <HStack spacing={[20, null, 5, 5, 10]}>
-      {user ? <LoggedIn /> : <LoggedOut />}
+      {isEmpty(user) ? <LoggedOut /> : <LoggedIn />}
     </HStack>
   );
 }
