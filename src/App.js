@@ -5,6 +5,7 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import DashBoard from './routes/DashBoard';
 import Home from './routes/Home';
+import PrivateRoute from './routes/PrivateRoute';
 import PublicRoute from './routes/PublicRoute';
 
 function App() {
@@ -28,7 +29,14 @@ function App() {
             </PublicRoute>
           }
         />
-        <Route path="dashboard" element={<DashBoard />} />
+        <Route
+          path="dashboard"
+          element={
+            <PrivateRoute>
+              <DashBoard />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </Layout>
   );
