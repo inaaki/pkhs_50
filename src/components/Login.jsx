@@ -18,7 +18,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import { reach } from 'yup';
 import withBackground from '../hoc/withBackground';
 import { submitData } from '../utils/fakeApi';
@@ -26,6 +26,8 @@ import { login, validation } from '../validations';
 import Thunder from './icons/Thunder';
 
 function Login() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [state, setState] = useState({
     phone: '',
     password: '',
@@ -75,13 +77,17 @@ function Login() {
       setIsLoading(true);
       try {
         //will be replaced by real rest-api
-        const result = await submitData(false);
+        const result = await submitData(true);
         console.log(result);
         toast({
           status: 'success',
           title: 'Login successful',
           description: "We've successfully logged you in",
           variant: 'solid',
+        });
+        //navigating based on user delivered path
+        navigate(location.state?.from || '/', {
+          replace: true,
         });
       } catch (e) {
         console.log(e);
