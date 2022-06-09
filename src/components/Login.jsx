@@ -18,6 +18,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { reach } from 'yup';
 import withBackground from '../hoc/withBackground';
 import { submitData } from '../utils/fakeApi';
@@ -121,7 +122,10 @@ function Login() {
             Login to your account
           </Heading>
           <chakra.span color="gray.400">
-            Don't have an account? <Link color={'brand.600'}>Sign Up</Link>
+            Don't have an account?
+            <Link as={RouterLink} to={'/signup'} color={'brand.600'}>
+              Sign Up
+            </Link>
           </chakra.span>
         </VStack>
         <Divider />

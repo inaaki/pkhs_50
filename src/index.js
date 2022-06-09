@@ -1,5 +1,5 @@
 import { ChakraProvider } from '@chakra-ui/react';
-import React from 'react';
+import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
@@ -10,11 +10,13 @@ const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(
-  <UserProvider>
-    <BrowserRouter>
-      <ChakraProvider theme={Theme}>
-        <App />
-      </ChakraProvider>
-    </BrowserRouter>
-  </UserProvider>
+  <StrictMode>
+    <UserProvider>
+      <BrowserRouter>
+        <ChakraProvider theme={Theme}>
+          <App />
+        </ChakraProvider>
+      </BrowserRouter>
+    </UserProvider>
+  </StrictMode>
 );
