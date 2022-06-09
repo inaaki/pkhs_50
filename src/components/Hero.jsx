@@ -63,8 +63,7 @@ function Hero() {
               </Heading>
               <Text mt={4} lineHeight="1.5" pe="2">
                 We are united to build a memory. You're honourably invited to
-                join us We are united to build a memory. You're honourably
-                invited to join us We are united to build a memory.
+                join us. Going to celebrate the best event, cannot be done without you!
               </Text>
             </Box>
             <RouterLink to="/registration">
