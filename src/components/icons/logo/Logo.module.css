@@ -1,6 +1,6 @@
 .main {
   border-radius: 0.5rem;
-  color: #234E52;
+  color: #234e52;
   display: inline-block;
   font-family: 'Pacifico', cursive !important;
   margin-inline-start: -1vw;
@@ -11,6 +11,7 @@
 }
 .logo_title {
   font-size: 27px;
+  color: #FF5265;
 }
 .logo_year {
   font-size: 14px;
@@ -18,6 +19,7 @@
   position: absolute;
   top: 32px;
   left: 20px;
+  color: #5C73BC;
 }
 .logo_year span {
   margin-left: 20px;
@@ -29,6 +31,15 @@
   font-size: 8px;
   display: inline-block;
   margin-top: 12px;
+  color: #FFD02F;
+}
+
+.image {
+  display: inline;
+  height: 46px;
+  position: relative;
+  left: 1.25rem;
+  bottom: 0.2rem;
 }
 
 @media (min-width: 992px) {
