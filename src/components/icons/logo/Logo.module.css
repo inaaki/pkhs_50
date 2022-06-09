@@ -1,10 +1,13 @@
 .main {
-  font-family: 'Pacifico', cursive !important;
-  text-align: center;
-  position: relative;
+  border-radius: 0.5rem;
+  color: #234E52;
   display: inline-block;
-  transform: scale(0.75);
+  font-family: 'Pacifico', cursive !important;
   margin-inline-start: -1vw;
+  padding: 0 0.5rem;
+  position: relative;
+  text-align: center;
+  transform: scale(0.75);
 }
 .logo_title {
   font-size: 27px;
