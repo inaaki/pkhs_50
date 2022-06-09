@@ -6,17 +6,21 @@ import { UserContext } from '../context/userContext';
 import SignIn from './icons/SignIn';
 import SignUp from './icons/SignUp';
 
-export default function User() {
+export default function User({ onClick }) {
   const user = useContext(UserContext);
 
   return (
     <HStack spacing={[20, null, 5, 5, 10]}>
-      {isEmpty(user) ? <LoggedOut /> : <LoggedIn user={user} />}
+      {isEmpty(user) ? (
+        <LoggedOut />
+      ) : (
+        <LoggedIn user={user} onClick={onClick} />
+      )}
     </HStack>
   );
 }
 //
-function LoggedIn({ user }) {
+function LoggedIn({ user, onClick }) {
   //will be replaced later with dynamic code
   const isRegistered = user?.isRegistered;
 
@@ -28,7 +32,7 @@ function LoggedIn({ user }) {
   return (
     <>
       <RouterLink to={isRegistered ? '/dashboard' : '/registration'}>
-        <Button variant={'solid'} size={responsiveSize}>
+        <Button variant={'solid'} size={responsiveSize} onClick={onClick}>
           {isRegistered ? 'DashBoard' : 'Register'}
         </Button>
       </RouterLink>

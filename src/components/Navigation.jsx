@@ -1,10 +1,11 @@
 import { HStack, Link, Slide, Stack, VStack } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { enableScroll } from '../utils/scroll';
 import User from './User';
 
 /* ----- navbar for mobile user ----- */
-export function MobileNav({ isOpen }) {
+export function MobileNav({ isOpen, onClick }) {
   return (
     <Slide
       in={isOpen}
@@ -15,9 +16,9 @@ export function MobileNav({ isOpen }) {
       }}
     >
       <VStack bg="white" h="100vh" pt={24} spacing={10} w="full">
-        <User />
+        <User onClick={onClick} />
         <VStack spacing={5}>
-          <NavItems />
+          <NavItems onClick={onClick} />
         </VStack>
       </VStack>
     </Slide>
@@ -44,7 +45,7 @@ export function DesktopNav() {
 }
 
 /* ------- navItems generator ------- */
-function NavItems(props) {
+function NavItems({ onClick, ...props }) {
   const NAV_ITEMS = [
     { title: 'home', path: '/' },
     { title: 'venue', path: '#venue' },
@@ -61,7 +62,14 @@ function NavItems(props) {
       align="center"
     >
       {NAV_ITEMS.map(({ title, path }) => (
-        <Link key={title + path} href="path" variant="nav-link" {...props}>
+        <Link
+          as={RouterLink}
+          to={path}
+          key={title + path}
+          onClick={() => onClick && onClick()}
+          variant="nav-link"
+          {...props}
+        >
           {title}
         </Link>
       ))}

@@ -7,7 +7,7 @@ import Toggler from './icons/Toggler';
 import { DesktopNav, MobileNav } from './Navigation';
 
 function Nav() {
-  const [isOpen, toggleNav] = useState(false);
+  const [isOpen, setNav] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
 
   useEffect(() => {
@@ -25,9 +25,9 @@ function Nav() {
     };
   }, []);
 
-  const toggleAction = () => {
+  const toggleNav = () => {
     !isOpen ? disableScroll() : enableScroll();
-    toggleNav(!isOpen);
+    setNav(!isOpen);
   };
 
   return (
@@ -44,13 +44,13 @@ function Nav() {
           <DesktopNav />
         </Show>
         <Hide above="md">
-          <Button onClick={toggleAction} variant={'outline'}>
+          <Button onClick={toggleNav} variant={'outline'}>
             <Toggler isOpen={isOpen} />
           </Button>
         </Hide>
       </HStack>
       <Hide above="md">
-        <MobileNav isOpen={isOpen} />
+        <MobileNav isOpen={isOpen} onClick={toggleNav} />
       </Hide>
     </Header>
   );
