@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
 import Login from './components/Login';
+import Registration from './components/registration/Registration';
 import SignUp from './components/SignUp';
 import DashBoard from './routes/DashBoard';
 import Home from './routes/Home';
@@ -34,6 +35,14 @@ function App() {
           element={
             <PrivateRoute>
               <DashBoard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="registration"
+          element={
+            <PrivateRoute>
+              <Registration />
             </PrivateRoute>
           }
         />

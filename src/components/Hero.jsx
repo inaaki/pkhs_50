@@ -13,6 +13,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import school_1 from '../assets/images/school_1.jpeg';
 import school_2 from '../assets/images/school_2.jpeg';
 import hero_bg from '../assets/svg/hero_bg.svg';
@@ -66,13 +67,11 @@ function Hero() {
                 invited to join us We are united to build a memory.
               </Text>
             </Box>
-            <Button
-              variant="cta"
-              size="cta"
-              onClick={() => console.log('routing to register page')}
-            >
-              Register Now
-            </Button>
+            <RouterLink to="/registration">
+              <Button variant="cta" size="cta">
+                Register Now
+              </Button>
+            </RouterLink>
           </VStack>
           {/* hero image */}
           <Center>
