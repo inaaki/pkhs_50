@@ -33,12 +33,15 @@ const Header = {
         bg: 'transparent',
       },
       nav: {
+        bg: 'rgba(255,255,255,0.95)',
         boxShadow: 'dark-lg',
         rounded: 'xl',
         width: '95%',
         //
-        backdropFilter: 'blur(5px)',
-        bg: 'rgba(255,255,255,0.5)',
+        '@supports (backdrop-filter: blur(0))': {
+          backdropFilter: 'blur(5px)',
+          bg: 'rgba(255,255,255,0.5)',
+        },
       },
     },
   },
