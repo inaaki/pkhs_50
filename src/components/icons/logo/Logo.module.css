@@ -11,7 +11,7 @@
 }
 .logo_title {
   font-size: 27px;
-  color: #FF5265;
+  color: #38A169;
 }
 .logo_year {
   font-size: 14px;
@@ -19,7 +19,7 @@
   position: absolute;
   top: 32px;
   left: 20px;
-  color: #5C73BC;
+  color: #FF5265;
 }
 .logo_year span {
   margin-left: 20px;
@@ -31,7 +31,7 @@
   font-size: 8px;
   display: inline-block;
   margin-top: 12px;
-  color: #FFD02F;
+  color: #5C73BC;
 }
 
 .image {
