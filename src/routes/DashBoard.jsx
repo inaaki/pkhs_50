@@ -1,15 +1,29 @@
 import { Flex } from '@chakra-ui/react';
-import React from 'react';
 import DisplayData from '../components/DisplayData';
 import ProfileCard from '../components/ProfileCard';
 import withBackground from '../hoc/withBackground';
 
-const data = {
-  name: 'mohammad inzamul',
-  age: '35',
+//will be replace by real data
+const user = {
+  _id: '352c94c8e0f6',
+  data: {
+    name: 'Lindsey James',
+    age: '35',
+    batch: 2014,
+    ticket: 3,
+    sex: 'female',
+    occupation: 'CTO, Laravo IT',
+    children: 2,
+    totalFamilyMember: 5,
+  },
 };
 
 function DashBoard() {
+  const {
+    id,
+    data: { name, batch, ticket },
+  } = user;
+
   return (
     <Flex
       gap={20}
@@ -19,8 +33,8 @@ function DashBoard() {
       direction={{ base: 'column', md: 'row' }}
       maxW={'7xl'}
     >
-      <ProfileCard />
-      <DisplayData data={data} minW={{ base: 'auto', lg: 'lg' }} />
+      <ProfileCard id={id} name={name} batch={batch} ticket={ticket} />
+      <DisplayData data={user.data} minW={{ base: 'auto', lg: 'lg' }} />
     </Flex>
   );
 }

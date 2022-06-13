@@ -1,5 +1,4 @@
 import { Table, TableContainer, Tbody, Td, Tr } from '@chakra-ui/react';
-import React from 'react';
 import { camelToMultiWords } from '../utils/convert';
 
 //this component displays data for ***non-nested object***
@@ -28,7 +27,14 @@ function DisplayData({ data = {}, ...rest }) {
         <Tbody whiteSpace="nowrap">
           {Object.keys(data).map(key =>
             data[key] ? (
-              <Tr key={key}>
+              <Tr
+                key={key}
+                sx={{
+                  '&:last-child > td': {
+                    borderColor: 'gray.200',
+                  },
+                }}
+              >
                 {[camelToMultiWords(key), data[key]].map(item => (
                   <Td key={item} whiteSpace="normal">
                     {item}
