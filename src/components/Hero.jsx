@@ -5,18 +5,13 @@ import {
   chakra,
   Container,
   Heading,
-  Image,
   SimpleGrid,
-  Square,
   Text,
-  useMediaQuery,
   VStack,
 } from '@chakra-ui/react';
-import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import school_1 from '../assets/images/school_1.jpeg';
-import school_2 from '../assets/images/school_2.jpeg';
 import hero_bg from '../assets/svg/hero_bg.svg';
+import HeroImage from './HeroImage';
 
 function Hero() {
   const sectionCss = {
@@ -63,7 +58,8 @@ function Hero() {
               </Heading>
               <Text mt={4} lineHeight="1.5" pe="2">
                 We are united to build a memory. You're honourably invited to
-                join us. Going to celebrate the best event, cannot be done without you!
+                join us. Going to celebrate the best event, cannot be done
+                without you!
               </Text>
             </Box>
             <RouterLink to="/registration">
@@ -82,76 +78,4 @@ function Hero() {
   );
 }
 
-function HeroImage() {
-  const [isMobile] = useMediaQuery('(hover:none)');
-
-  return (
-    <Square
-      boxSize={['350px', '400px', '400px', '500px', '600px']}
-      position="relative"
-      data-group
-    >
-      <ImageCard
-        _groupHover={!isMobile ? { left: '25%' } : ''}
-        left="28.5%"
-        pos="absolute"
-        src={school_1}
-        top="17%"
-        transform="rotate(-7.5deg)"
-        transformOrigin="left"
-        width={{ base: '70%', sm: '75%', lg: '65%' }}
-      />
-      <ImageCard
-        _groupHover={!isMobile ? { left: '10%' } : ''}
-        left="6.5%"
-        pos="absolute"
-        src={school_2}
-        top="51%"
-        transform="rotate(7.5deg)"
-        transformOrigin="left"
-        transition="all 250ms cubic-bezier(0.4, 0, 0.2, 1) 50ms"
-        width={{ base: '60%', sm: '65%', lg: '55%' }}
-      />
-    </Square>
-  );
-}
-
 export default Hero;
-
-function ImageCard({
-  _active,
-  _hover,
-  cursor,
-  overflow,
-  src,
-  srcset,
-  transition,
-  ...props
-}) {
-  const baseStyle = {
-    borderRadius: 'md',
-    border: '1px',
-    borderColor: 'blackAlpha.300',
-    boxShadow: 'lg',
-    cursor: cursor || 'pointer',
-    overflow: overflow || 'hidden',
-    p: '2',
-    backgroundColor: 'gray.50',
-    transition: transition || 'all 250ms cubic-bezier(0.4, 0, 0.2, 1) 50ms',
-  };
-
-  const hoverStyle = {
-    borderColor: 'brand.500',
-    ..._hover,
-  };
-  const activeStyle = {
-    transform: 'scale(1.05)',
-    ..._active,
-  };
-
-  return (
-    <Box sx={baseStyle} _hover={hoverStyle} _active={activeStyle} {...props}>
-      <Image borderRadius={baseStyle.borderRadius} src={src} srcSet={srcset} />
-    </Box>
-  );
-}
