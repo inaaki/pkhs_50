@@ -9,6 +9,7 @@ function ImageCard({
   srcSet,
   transform,
   transition,
+  onOpen,
   ...props
 }) {
   const baseStyle = {
@@ -38,6 +39,7 @@ function ImageCard({
         _hover={hoverStyle}
         _active={activeStyle}
         transform={transform}
+        onClick={onOpen}
         {...props}
       >
         <Image
