@@ -3,15 +3,16 @@ import React from 'react';
 import bg from '../assets/svg/wave.svg';
 
 function withBackground(Component) {
-  const style = {
-    background: `top/contain url(${bg}) no-repeat`,
+  return props => {
+    return (
+      <Center
+        minH={'calc(100vh - 67.5px)'}
+        background={`top/contain url(${bg}) no-repeat`}
+      >
+        <Component {...props} />
+      </Center>
+    );
   };
-
-  return props => (
-    <Center minH={'calc(100vh - 67.5px)'} sx={style} >
-      <Component {...props} />
-    </Center>
-  );
 }
 
 export default withBackground;
