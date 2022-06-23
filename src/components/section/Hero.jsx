@@ -10,8 +10,8 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
-import hero_bg from '../assets/svg/hero_bg.svg';
-import HeroImage from './HeroImage';
+import hero_bg from '../../assets/svg/hero_bg.svg';
+import HeroImage from '../HeroImage';
 
 function Hero() {
   const sectionCss = {

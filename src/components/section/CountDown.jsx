@@ -1,4 +1,4 @@
-import time from '../utils/time';
+import time from '../../utils/time';
 import {
   Box,
   Center,
@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import Lighting from './icons/Lighting';
+import Lighting from '../icons/Lighting';
 
 function CountDown() {
   const [month, setMonth] = useState(10);
