@@ -11,9 +11,11 @@ import {
   useToast,
   VStack,
 } from '@chakra-ui/react';
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { reach } from 'yup';
 import withBackground from '../../hoc/withBackground';
+import withNonRegisteredRoute from '../../hoc/withNonRegisteredRoute';
+import withPrivateRoute from '../../hoc/withPrivateRoute';
 import { submitData } from '../../utils/fakeApi';
 import { cloneDeepObject, nestedToSingleObject } from '../../utils/object';
 import { registrationSchema, validation } from '../../validations';
@@ -240,4 +242,6 @@ function Buttons(props) {
   );
 }
 
-export default withBackground(Registration);
+export default withPrivateRoute(
+  withNonRegisteredRoute(withBackground(Registration))
+);

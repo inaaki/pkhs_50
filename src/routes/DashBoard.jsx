@@ -2,6 +2,8 @@ import { Flex } from '@chakra-ui/react';
 import DisplayData from '../components/DisplayData';
 import ProfileCard from '../components/ProfileCard';
 import withBackground from '../hoc/withBackground';
+import withPrivateRoute from '../hoc/withPrivateRoute';
+import withRegisteredRoute from '../hoc/withRegisteredRoute';
 
 //will be replace by real data
 const user = {
@@ -39,4 +41,4 @@ function DashBoard() {
   );
 }
 
-export default withBackground(DashBoard);
+export default withPrivateRoute(withRegisteredRoute(withBackground(DashBoard)));

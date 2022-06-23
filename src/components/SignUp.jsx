@@ -17,10 +17,11 @@ import {
   useToast,
   VStack,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { reach } from 'yup';
 import withBackground from '../hoc/withBackground';
+import withPublicRoute from '../hoc/withPublicRoute';
 import { submitData } from '../utils/fakeApi';
 import { signUp, validation } from '../validations';
 import Thunder from './icons/Thunder';
@@ -210,4 +211,4 @@ function SignUp() {
   );
 }
 
-export default withBackground(SignUp);
+export default withPublicRoute(withBackground(SignUp));

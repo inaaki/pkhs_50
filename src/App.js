@@ -13,14 +13,6 @@ const Registration = lazy(() =>
   import('./components/registration/Registration')
 );
 const NotFound = lazy(() => import('./components/NotFound'));
-const PrivateRoute = lazy(() => import('./routes/conditional/PrivateRoute'));
-const PublicRoute = lazy(() => import('./routes/conditional/PublicRoute'));
-const RegisteredRoute = lazy(() =>
-  import('./routes/conditional/RegisteredRoute')
-);
-const NonRegisteredRoute = lazy(() =>
-  import('./routes/conditional/NonRegisteredRoute')
-);
 
 function App() {
   return (
@@ -28,43 +20,17 @@ function App() {
       <Suspense fallback={<FullLoader />}>
         <Routes>
           <Route path="/" element={<Home />} />
+
           <Route path="contact" element={<Contact />} />
-          <Route
-            path="login"
-            element={
-              <PublicRoute>
-                <Login />
-              </PublicRoute>
-            }
-          />
-          <Route
-            path="signup"
-            element={
-              <PublicRoute>
-                <SignUp />
-              </PublicRoute>
-            }
-          />
-          <Route
-            path="dashboard"
-            element={
-              <PrivateRoute>
-                <RegisteredRoute>
-                  <DashBoard />
-                </RegisteredRoute>
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="registration"
-            element={
-              <PrivateRoute>
-                <NonRegisteredRoute>
-                  <Registration />
-                </NonRegisteredRoute>
-              </PrivateRoute>
-            }
-          />
+
+          <Route path="login" element={<Login />} />
+
+          <Route path="signup" element={<SignUp />} />
+
+          <Route path="dashboard" element={<DashBoard />} />
+
+          <Route path="registration" element={<Registration />} />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
