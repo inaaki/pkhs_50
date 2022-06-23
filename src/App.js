@@ -5,6 +5,7 @@ import FullLoader from './components/loader/FullLoader';
 
 //code splitting
 const Home = lazy(() => import('./routes/Home'));
+const Contact = lazy(() => import('./routes/Contact'));
 const Login = lazy(() => import('./components/Login'));
 const SignUp = lazy(() => import('./components/SignUp'));
 const DashBoard = lazy(() => import('./routes/DashBoard'));
@@ -27,6 +28,7 @@ function App() {
       <Suspense fallback={<FullLoader />}>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="contact" element={<Contact />} />
           <Route
             path="login"
             element={

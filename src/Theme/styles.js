@@ -36,6 +36,9 @@ const styles = {
         backgroundImage:
           'linear-gradient(to bottom, #276749, #68D391, #276749)',
       },
+      picture: {
+        flexShrink: 0,
+      },
     },
   },
 };

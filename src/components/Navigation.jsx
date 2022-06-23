@@ -1,5 +1,5 @@
 import { HStack, Link, Slide, Stack, VStack } from '@chakra-ui/react';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { enableScroll } from '../utils/scroll';
 import User from './User';
@@ -50,7 +50,7 @@ function NavItems({ onClick, ...props }) {
     { title: 'home', path: '/' },
     { title: 'venue', path: '#venue' },
     { title: 'schedule', path: '#schedule' },
-    { title: 'contact', path: '#contact' },
+    { title: 'contact', path: 'contact' },
   ];
 
   return (
@@ -63,12 +63,12 @@ function NavItems({ onClick, ...props }) {
     >
       {NAV_ITEMS.map(({ title, path }) => (
         <Link
+          key={title}
           as={RouterLink}
           to={path}
-          key={title + path}
-          onClick={() => onClick && onClick()}
           variant="nav-link"
           {...props}
+          onClick={() => onClick && onClick()}
         >
           {title}
         </Link>
