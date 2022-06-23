@@ -1,4 +1,5 @@
-import { Box, Image } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
+import Picture from './Picture';
 
 function ImageCard({
   _active,
@@ -6,7 +7,7 @@ function ImageCard({
   cursor,
   overflow,
   src,
-  srcSet,
+  sources,
   transform,
   transition,
   onOpen,
@@ -42,10 +43,10 @@ function ImageCard({
         onClick={onOpen}
         {...props}
       >
-        <Image
-          borderRadius={baseStyle.borderRadius}
+        <Picture
+          sources={sources}
           src={src}
-          srcSet={srcSet}
+          borderRadius={baseStyle.borderRadius}
         />
       </Box>
     </>

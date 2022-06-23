@@ -1,13 +1,11 @@
 import { Square, useMediaQuery } from '@chakra-ui/react';
-import school_1 from '../assets/images/school_1.jpeg';
-import school_2 from '../assets/images/school_2.jpeg';
-import withFullPageImage from '../hoc/withFullPageImage';
+import pic_one from '../assets/images/school/one';
+import pic_two from '../assets/images/school/two';
+import FullPagedImageCard from './FullPagedImageCard';
 import ImageCard from './ImageCard';
 
 function HeroImage() {
   const [isMobile] = useMediaQuery('(hover:none)');
-
-  const FullPagedImageCard = withFullPageImage(ImageCard);
 
   return (
     <Square
@@ -16,26 +14,68 @@ function HeroImage() {
       data-group
     >
       <FullPagedImageCard
-        _groupHover={!isMobile ? { left: '25%' } : ''}
-        left="28.5%"
-        pos="absolute"
-        src={school_1}
-        top="17%"
-        transform="rotate(-7.5deg)"
-        transformOrigin="left"
-        width={{ base: '70%', sm: '75%', lg: '65%' }}
-      />
+        imagePath={{
+          src: pic_one.full.jpg,
+          sources: [
+            { srcset: pic_one.full.webp, media: '(min-width: 1280px)' },
+            { srcset: pic_one.full.jpg, media: '(min-width: 1280px)' },
+            { srcset: pic_one.half.webp, media: '(min-width: 576px)' },
+            { srcset: pic_one.half.jpg, media: '(min-width: 576px)' },
+            { srcset: pic_one.mini.webp },
+            { srcset: pic_one.mini.jpg },
+          ],
+        }}
+      >
+        {({ handleOpen }) => (
+          <ImageCard
+            _groupHover={!isMobile ? { left: '25%' } : ''}
+            left="28.5%"
+            pos="absolute"
+            top="17%"
+            transform="rotate(-7.5deg)"
+            transformOrigin="left"
+            width={{ base: '70%', sm: '75%', lg: '65%' }}
+            sources={[
+              { srcset: pic_one.mini.webp },
+              { srcset: pic_one.mini.jpg },
+            ]}
+            src={pic_one.mini.jpg}
+            onOpen={handleOpen}
+          />
+        )}
+      </FullPagedImageCard>
+      {/*  */}
       <FullPagedImageCard
-        _groupHover={!isMobile ? { left: '10%' } : ''}
-        left="6.5%"
-        pos="absolute"
-        src={school_2}
-        top="52%"
-        transform="rotate(7.5deg)"
-        transformOrigin="left"
-        transition="all 250ms cubic-bezier(0.4, 0, 0.2, 1) 50ms"
-        width={{ base: '60%', sm: '65%', lg: '55%' }}
-      />
+        imagePath={{
+          src: pic_two.full.jpg,
+          sources: [
+            { srcset: pic_two.full.webp, media: '(min-width: 1280px)' },
+            { srcset: pic_two.full.jpg, media: '(min-width: 1280px)' },
+            { srcset: pic_two.half.webp, media: '(min-width: 576px)' },
+            { srcset: pic_two.half.jpg, media: '(min-width: 576px)' },
+            { srcset: pic_two.mini.webp },
+            { srcset: pic_two.mini.jpg },
+          ],
+        }}
+      >
+        {({ handleOpen }) => (
+          <ImageCard
+            _groupHover={!isMobile ? { left: '10%' } : ''}
+            left="6.5%"
+            pos="absolute"
+            top="52%"
+            transform="rotate(7.5deg)"
+            transformOrigin="left"
+            width={{ base: '60%', sm: '65%', lg: '55%' }}
+            sources={[
+              { srcset: pic_two.mini.webp },
+              { srcset: pic_two.mini.jpg },
+            ]}
+            src={pic_two.mini.jpg}
+            onOpen={handleOpen}
+          />
+        )}
+      </FullPagedImageCard>
     </Square>
   );
 }
