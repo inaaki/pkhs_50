@@ -7,14 +7,13 @@ import Picture from './Picture';
 //will be replaced by props
 const name = 'md. inzamul huq akib';
 const phone = '01629-847168';
-const src = person_jpg;
 const sources = [{ srcset: person_webp }, { srcset: person_jpg }];
 
 function Person() {
   return (
     <HStack spacing={5} p={2}>
       <Picture
-        src={src}
+        src={person_jpg}
         sources={sources}
         rounded="full"
         w={'75px'}
