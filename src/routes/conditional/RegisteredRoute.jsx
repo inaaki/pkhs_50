@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { UserContext } from '../../context/userContext';
+import { useUserContext } from '../../context/userContext';
 
 function RegisteredRoute({ children }) {
-  const user = useContext(UserContext);
+  const user = useUserContext();
 
   return user?.isRegistered ? (
     <>{children}</>

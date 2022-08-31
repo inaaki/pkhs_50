@@ -1,9 +1,9 @@
- import React, { useContext } from 'react';
+import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { UserContext } from '../../context/userContext';
+import { useUserContext } from '../../context/userContext';
 
 function NonRegisteredRoute({ children }) {
-  const user = useContext(UserContext);
+  const user = useUserContext();
   return user?.isRegistered ? (
     <Navigate to={'/dashboard'} replace />
   ) : (

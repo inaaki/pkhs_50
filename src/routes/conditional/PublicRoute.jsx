@@ -1,10 +1,10 @@
 import isEmpty from 'lodash/isEmpty';
-import React, { useContext } from 'react';
+import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { UserContext } from '../../context/userContext';
+import { useUserContext } from '../../context/userContext';
 
 function PublicRoute({ children }) {
-  const user = useContext(UserContext);
+  const user = useUserContext();
 
   return isEmpty(user) ? <>{children}</> : <Navigate to="/" />;
 }
