@@ -15,8 +15,6 @@ const user = {
     ticket: 3,
     sex: 'female',
     occupation: 'CTO, Laravo IT',
-    children: 2,
-    totalFamilyMember: 5,
   },
 };
 
