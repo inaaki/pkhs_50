@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 
-const UserContext = React.createContext({});
+const UserContext = React.createContext();
 UserContext.displayName = 'UserContext';
 
 export function useUserContext() {
@@ -15,9 +15,33 @@ export function useUserContext() {
 function UserProvider({ children }) {
   //user will be replace by api
   // const user = { name: 'aaa', isRegistered: false };
-  const user = {};
 
-  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
+  const [user, setUser] = useState(null);
+
+  const handleLogin = useCallback(() => setUser({ isRegistered: false }), []);
+  const handleLogout = useCallback(() => setUser(null), []);
+  const handleDashboard = useCallback(
+    () => setUser({ isRegistered: true }),
+    []
+  );
+  const handleRegister = useCallback(
+    () => setUser({ isRegistered: false }),
+    []
+  );
+
+  return (
+    <UserContext.Provider
+      value={{
+        onDashboard: handleDashboard,
+        onLogin: handleLogin,
+        onLogout: handleLogout,
+        onRegister: handleRegister,
+        user,
+      }}
+    >
+      {children}
+    </UserContext.Provider>
+  );
 }
 
 export default UserProvider;

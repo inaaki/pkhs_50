@@ -7,7 +7,7 @@ import SignIn from './icons/SignIn';
 import SignUp from './icons/SignUp';
 
 export default function User({ onClick }) {
-  const user = useUserContext();
+  const { user } = useUserContext();
 
   return (
     <HStack spacing={[20, null, 5, 5, 10]}>

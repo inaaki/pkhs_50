@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 import { useUserContext } from '../../context/userContext';
 
 function PublicRoute({ children }) {
-  const user = useUserContext();
+  const { user } = useUserContext();
 
   return isEmpty(user) ? <>{children}</> : <Navigate to="/" />;
 }
