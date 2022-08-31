@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
 import FullLoader from './components/loader/FullLoader';
+import Simulation from './components/Simulation';
 
 //code splitting
 const Home = lazy(() => import('./routes/Home'));
@@ -18,6 +19,7 @@ function App() {
   return (
     <Layout>
       <Suspense fallback={<FullLoader />}>
+        <Simulation pos={'fixed'} bottom={5} left={5} />
         <Routes>
           <Route path="/" element={<Home />} />
 
