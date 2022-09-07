@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 const UserContext = React.createContext();
 UserContext.displayName = 'UserContext';

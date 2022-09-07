@@ -16,7 +16,7 @@ function Simulation(props) {
 
   const hasUser = !isEmpty(user);
   return (
-    <HStack spacing={10} p={5} {...props}>
+    <HStack spacing={10} p={5} zIndex={'tooltip'} {...props}>
       <Icon
         as={AiTwotoneSetting}
         boxSize={10}
