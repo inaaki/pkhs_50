@@ -1,11 +1,11 @@
 import { object } from 'yup';
-import errMsg from './errorMessage';
+import errorMessage from '../utils/errorMessage';
 import partialSchema from './partialSchema';
 
 const { mobileNumber, requiredString } = partialSchema;
 
 const signUpSchema = object({
-  phone: mobileNumber.required(errMsg.required),
+  phone: mobileNumber.required(errorMessage.required),
   password: requiredString,
 });
 

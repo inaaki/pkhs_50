@@ -1,10 +1,11 @@
 /* eslint-disable no-template-curly-in-string */
 import { object } from 'yup';
-import errMsg from './errorMessage';
+import errorMessage from '../utils/errorMessage';
 import partialSchema from './partialSchema';
-//
+
 const { optionalString, requiredString, mobileNumber, safeNumber } =
   partialSchema;
+
 /* --------- schema objects --------- */
 const personal = object({
   banglaName: optionalString,
@@ -29,9 +30,9 @@ const contact = object({
 });
 
 const ceremonial = object({
-  batch: safeNumber.min(1972, errMsg.batch).max(2022, errMsg.batch),
+  batch: safeNumber.min(1972, errorMessage.batch).max(2022, errorMessage.batch),
   guest: safeNumber
-    .min(0, errMsg.number)
+    .min(0, errorMessage.number)
     .max(10, 'Maximum guest count is ${max}'),
   institute: optionalString,
   others: optionalString.max(150, 'Maximum characters length is 150'),
@@ -40,15 +41,15 @@ const ceremonial = object({
 });
 
 const payment = object({
-  paymentMethod: requiredString,
   paymentId: requiredString,
+  paymentMethod: requiredString,
 });
 
 const validationSchema = {
-  personal,
-  contact,
   ceremonial,
+  contact,
   payment,
+  personal,
 };
 
 export default validationSchema;

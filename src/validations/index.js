@@ -1,4 +1,4 @@
-export { default as login } from './login';
-export { default as registrationSchema } from './registration';
-export { default as validation } from './helper';
-export {default as signUp} from './signUp'
+export { default as login } from './schema/login';
+export { default as registration } from './schema/registration';
+export { default as signUp } from './schema/signUp';
+export { default as validate } from './utils/helper';
