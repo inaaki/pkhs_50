@@ -18,7 +18,7 @@ import withNonRegisteredRoute from '../../hoc/withNonRegisteredRoute';
 import withPrivateRoute from '../../hoc/withPrivateRoute';
 import { submitData } from '../../utils/fakeApi';
 import { cloneDeepObject, nestedToSingleObject } from '../../utils/object';
-import { registrationSchema, validation } from '../../validations';
+import { registration, validate } from '../../validations';
 import Card from '../Card';
 import DisplayData from '../DisplayData';
 import Ceremonial from './Ceremonial';
@@ -128,7 +128,7 @@ function Registration() {
   };
 
   const handleNext = () => {
-    validation(registrationSchema[currentPart], state[currentPart])
+    validate(registration[currentPart], state[currentPart])
       .then(r => {
         setError({});
         setCategoryIndex(state => state + 1);
@@ -140,7 +140,7 @@ function Registration() {
 
   const handleBlur = e => {
     const { name } = e.target;
-    reach(registrationSchema[currentPart], name)
+    reach(registration[currentPart], name)
       .validate(state[currentPart][name])
       .then(r => {
         setError({ ...error, [name]: '' });

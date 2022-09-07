@@ -23,7 +23,7 @@ import { reach } from 'yup';
 import withBackground from '../hoc/withBackground';
 import withPublicRoute from '../hoc/withPublicRoute';
 import { submitData } from '../utils/fakeApi';
-import { signUp, validation } from '../validations';
+import { signUp, validate } from '../validations';
 import Thunder from './icons/Thunder';
 
 function SignUp() {
@@ -69,7 +69,7 @@ function SignUp() {
     e.preventDefault();
 
     try {
-      await validation(signUp, state);
+      await validate(signUp, state);
       setError({});
       //
       setIsLoading(true);
