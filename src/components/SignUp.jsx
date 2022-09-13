@@ -1,100 +1,39 @@
-import { PhoneIcon, UnlockIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+import { PhoneIcon, UnlockIcon } from '@chakra-ui/icons';
 import {
   Box,
   Button,
-  Center,
+  ButtonGroup,
   chakra,
   Divider,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
   Heading,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  InputRightElement,
+  Icon,
   Link,
-  useToast,
   VStack,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { Form, Formik } from 'formik';
+import { useCallback, useState } from 'react';
+import { BsFillUnlockFill } from 'react-icons/bs';
 import { Link as RouterLink } from 'react-router-dom';
-import { reach } from 'yup';
 import withBackground from '../hoc/withBackground';
 import withPublicRoute from '../hoc/withPublicRoute';
-import { submitData } from '../utils/fakeApi';
-import { signUp, validate } from '../validations';
-import Thunder from './icons/Thunder';
+import { signUpSchema } from '../validations';
+import InputBox from './form/InputBox';
+import PasswordToggleIcon from './icons/PasswordToggleIcon';
 
 function SignUp() {
-  const [state, setState] = useState({
-    phone: '',
+  const initialData = {
+    name: '',
     password: '',
-  });
-  const [error, setError] = useState({});
-  const [isShow, setIsShow] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const toast = useToast({
-    position: 'bottom',
-    isClosable: true,
-    duration: 5000,
-  });
-
-  //handle change function
-  const handleChange = e => {
-    let { name, value } = e.target;
-    if (value.includes('  ')) {
-      value = value.replace(/\s\s+/g, ' ');
-    }
-    const newState = { ...state };
-    newState[name] = value;
-    setState(newState);
+    password_confirmation: '',
+    phone: '',
+    ssc: '',
   };
+  const [showPass, setShowPass] = useState(false);
+  const handlePassView = useCallback(() => setShowPass(prev => !prev), []);
 
-  //handle focus out
-  const handleBlur = e => {
-    const { name } = e.target;
-    reach(signUp, name)
-      .validate(state[name])
-      .then(r => {
-        setError({ ...error, [name]: '' });
-      })
-      .catch(e => {
-        setError({ ...error, [name]: e.message });
-      });
-  };
-
-  //handle submit
-  const handleSubmit = async e => {
-    e.preventDefault();
-
-    try {
-      await validate(signUp, state);
-      setError({});
-      //
-      setIsLoading(true);
-      try {
-        //will be replaced by real rest-api
-        await submitData(1);
-        toast({
-          status: 'success',
-          title: 'Login successful',
-          description: "We've successfully logged you in",
-          variant: 'solid',
-        });
-      } catch (e) {
-        toast({
-          status: 'error',
-          title: 'Error occurred',
-          description: 'Sorry, we were unable to log you in',
-          variant: 'solid',
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    } catch (e) {
-      setError(e);
-    }
+  const handleSubmit = async (a, b, c) => {
+    console.log('a', a);
+    console.log('b', b);
   };
 
   return (
@@ -105,12 +44,11 @@ function SignUp() {
       borderRadius="md"
       boxShadow="md"
       m={4}
-      p={7}
-      py={10}
+      p={6}
+      py={8}
     >
-      <VStack spacing={{ base: 5, md: 8 }}>
-        <VStack spacing={2}>
-          <Thunder color="brand.500" boxSize={10} />
+      <VStack spacing={{ base: 5, md: 6 }}>
+        <VStack>
           <Heading
             as={'h3'}
             fontSize={{ base: '2xl', md: '3xl' }}
@@ -119,93 +57,91 @@ function SignUp() {
             Create an account
           </Heading>
           <chakra.span color="gray.400">
-            Already have an account?
+            Already have an account?{' '}
             <Link as={RouterLink} to={'/login'} color={'brand.600'}>
               Log In
             </Link>
           </chakra.span>
         </VStack>
         <Divider />
-        <form onSubmit={handleSubmit}>
-          <VStack spacing={6}>
-            <FormControl isInvalid={error.phone}>
-              <FormLabel htmlFor="signUp_phone">Phone Number</FormLabel>
-              <InputGroup>
-                <InputLeftElement
-                  boxSize={12}
-                  children={<PhoneIcon color={'gray.400'} />}
-                  pointerEvents="none"
-                />
-                <Input
-                  _placeholder={{ fontSize: { base: 'sm', md: 'md' } }}
-                  disabled={isLoading}
-                  id="signUp_phone"
-                  placeholder="Enter your Phone Number"
-                  size={'lg'}
-                  variant="filled"
-                  //
-                  type="number"
-                  name="phone"
-                  value={state.phone}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-              </InputGroup>
-              <FormErrorMessage>{error.phone}</FormErrorMessage>
-            </FormControl>
-
-            {/* password field */}
-            <FormControl isInvalid={error.password}>
-              <FormLabel htmlFor="signUp_pass">Password</FormLabel>
-              <InputGroup>
-                <InputLeftElement
-                  boxSize={12}
-                  children={<UnlockIcon color={'gray.400'} />}
-                  pointerEvents="none"
-                />
-                <Input
-                  _placeholder={{ fontSize: { base: 'sm', md: 'md' } }}
-                  disabled={isLoading}
-                  id="signUp_pass"
-                  placeholder="Enter your Password"
-                  size={'lg'}
-                  variant="filled"
-                  //
-                  type={isShow ? 'text' : 'password'}
-                  name="password"
-                  value={state.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-                <InputRightElement
-                  boxSize={12}
-                  children={
-                    isShow ? (
-                      <ViewOffIcon color={'gray.400'} boxSize={5} />
-                    ) : (
-                      <ViewIcon color={'gray.400'} boxSize={5} />
-                    )
-                  }
-                  onClick={() => {
-                    setIsShow(state => !state);
-                  }}
-                />
-              </InputGroup>
-              <FormErrorMessage>{error.password}</FormErrorMessage>
-            </FormControl>
-            <Center pt={3}>
-              <Button
-                isLoading={isLoading}
-                loadingText="signing up"
+        <Formik
+          initialValues={initialData}
+          validationSchema={signUpSchema}
+          onSubmit={handleSubmit}
+        >
+          <Form>
+            <VStack spacing={5}>
+              <InputBox
+                label="Name"
+                name="name"
+                placeholder="Enter you name"
+                type="text"
+              />
+              <InputBox
+                label="SSC batch"
+                name="ssc"
+                placeholder="Enter your SSC batch"
+                type="number"
+              />
+              <InputBox
+                label="Phone Number"
+                name="phone"
+                placeholder="Enter your Phone Number"
+                type="number"
+                leftElement={<PhoneIcon color={'gray.400'} />}
+              />
+              <InputBox
+                label="Password"
+                name="password"
+                placeholder="Enter your Password"
+                type={showPass ? 'text' : 'password'}
+                leftElement={<UnlockIcon color={'gray.400'} />}
+                rightElement={
+                  <PasswordToggleIcon
+                    show={showPass}
+                    onClick={handlePassView}
+                  />
+                }
+              />
+              <InputBox
+                label="confirm password"
+                name="password_confirmation"
+                placeholder="Confirm your Password"
+                type={showPass ? 'text' : 'password'}
+                leftElement={<Icon as={BsFillUnlockFill} color={'gray.400'} />}
+                rightElement={
+                  <PasswordToggleIcon
+                    show={showPass}
+                    onClick={handlePassView}
+                  />
+                }
+              />
+              {/* submit buttons */}
+              <ButtonGroup
+                isDisabled={false}
                 size={'form'}
-                type="submit"
-                onClick={() => {}}
+                className="btn-group"
               >
-                sign up
-              </Button>
-            </Center>
-          </VStack>
-        </form>
+                <Button
+                  type="reset"
+                  variant={'outline'}
+                  onClick={() => {
+                    console.log('reset');
+                  }}
+                >
+                  Reset
+                </Button>
+                <Button
+                  isLoading={false}
+                  loadingText="signing up"
+                  type="submit"
+                >
+                  Sign Up
+                </Button>
+              </ButtonGroup>
+            </VStack>
+          </Form>
+        </Formik>
       </VStack>
     </Box>
   );

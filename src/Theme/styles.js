@@ -39,6 +39,11 @@ const styles = {
       picture: {
         flexShrink: 0,
       },
+      '.btn-group': {
+        display: 'flex',
+        width: '100%',
+        justifyContent: 'space-between',
+      },
     },
   },
 };
