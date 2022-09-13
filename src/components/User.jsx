@@ -12,7 +12,7 @@ export default function User({ onClick }) {
   return (
     <HStack spacing={[20, null, 5, 5, 10]}>
       {isEmpty(user) ? (
-        <LoggedOut />
+        <LoggedOut onClick={onClick} />
       ) : (
         <LoggedIn user={user} onClick={onClick} />
       )}
@@ -44,7 +44,7 @@ function LoggedIn({ user, onClick }) {
     </>
   );
 }
-function LoggedOut() {
+function LoggedOut({ onClick }) {
   const navigate = useNavigate();
   const buttons = [
     {
@@ -74,7 +74,10 @@ function LoggedOut() {
           leftIcon={icon}
           size={responsiveSize}
           variant={variant}
-          onClick={() => navigate(route)}
+          onClick={() => {
+            navigate(route);
+            onClick?.();
+          }}
         >
           {title}
         </Button>
