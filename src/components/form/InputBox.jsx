@@ -15,9 +15,11 @@ function InputBox({
   label,
   leftElement,
   name,
+  onBlur,
+  onChange,
   placeholder,
   rightElement,
-  type = 'text',
+  type,
   ...props
 }) {
   //UI hooks
@@ -27,6 +29,7 @@ function InputBox({
   //formik hooks
   const [field, meta] = useField({ name, type });
   const { error, touched } = meta;
+  const { onChange: formikOnChange, onBlur: formikOnBlur } = field;
   return (
     <FormControl isInvalid={touched && error}>
       <FormLabel size={inputSize} htmlFor={name}>
@@ -44,9 +47,18 @@ function InputBox({
           id={name}
           placeholder={placeholder}
           size={inputSize}
-          type={type}
-          {...props}
+          type={type || 'text'}
           {...field}
+          //keep field props above custom onFunc to avoid overwrite
+          onChange={e => {
+            onChange?.(e);
+            formikOnChange(e);
+          }}
+          onBlur={e => {
+            onBlur?.(e);
+            formikOnBlur(e);
+          }}
+          {...props}
         />
         {rightElement && (
           <InputRightElement boxSize={inputIconSize} children={rightElement} />
