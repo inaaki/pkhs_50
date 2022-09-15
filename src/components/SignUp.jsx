@@ -31,6 +31,12 @@ function SignUp() {
   const [showPass, setShowPass] = useState(false);
   const handlePassView = useCallback(() => setShowPass(prev => !prev), []);
 
+  const handleMobileNumber = e => {
+    //trimming all space character with regex
+    const value = e.currentTarget.value;
+    e.currentTarget.value = value.replace(/\s/g, '');
+  };
+
   const handleSubmit = async (a, b, c) => {
     console.log('a', a);
     console.log('b', b);
@@ -71,25 +77,25 @@ function SignUp() {
         >
           <Form>
             <VStack spacing={5}>
-              <InputBox
-                label="Name"
-                name="name"
-                placeholder="Enter you name"
-                type="text"
-              />
+              {/* full name */}
+              <InputBox label="Name" name="name" placeholder="Enter you name" />
+              {/* ssc batch */}
               <InputBox
                 label="SSC batch"
                 name="ssc"
                 placeholder="Enter your SSC batch"
                 type="number"
               />
+              {/* phone */}
               <InputBox
                 label="Phone Number"
                 name="phone"
                 placeholder="Enter your Phone Number"
-                type="number"
+                type="text"
                 leftElement={<PhoneIcon color={'gray.400'} />}
+                onChange={handleMobileNumber}
               />
+              {/* password */}
               <InputBox
                 label="Password"
                 name="password"
@@ -103,6 +109,7 @@ function SignUp() {
                   />
                 }
               />
+              {/* confirm password */}
               <InputBox
                 label="confirm password"
                 name="password_confirmation"
