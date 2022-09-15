@@ -22,11 +22,11 @@ import PasswordToggleIcon from './icons/PasswordToggleIcon';
 
 function SignUp() {
   const initialData = {
-    name: '',
-    password: '',
-    password_confirmation: '',
+    // name: '',
+    // password: '',
+    // password_confirmation: '',
     phone: '',
-    ssc: '',
+    // ssc: '',
   };
   const [showPass, setShowPass] = useState(false);
   const handlePassView = useCallback(() => setShowPass(prev => !prev), []);
@@ -71,7 +71,7 @@ function SignUp() {
         >
           <Form>
             <VStack spacing={5}>
-              <InputBox
+              {/* <InputBox
                 label="Name"
                 name="name"
                 placeholder="Enter you name"
@@ -82,15 +82,16 @@ function SignUp() {
                 name="ssc"
                 placeholder="Enter your SSC batch"
                 type="number"
-              />
+              /> */}
               <InputBox
                 label="Phone Number"
                 name="phone"
                 placeholder="Enter your Phone Number"
                 type="number"
                 leftElement={<PhoneIcon color={'gray.400'} />}
+                onChange={() => console.log('ola')}
               />
-              <InputBox
+              {/* <InputBox
                 label="Password"
                 name="password"
                 placeholder="Enter your Password"
@@ -115,7 +116,7 @@ function SignUp() {
                     onClick={handlePassView}
                   />
                 }
-              />
+              /> */}
               {/* submit buttons */}
               <ButtonGroup
                 isDisabled={false}
