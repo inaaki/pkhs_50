@@ -13,21 +13,29 @@ import {
 import { Form, Formik } from 'formik';
 import { useCallback, useState } from 'react';
 import { BsFillUnlockFill } from 'react-icons/bs';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useUserContext } from '../context/userContext';
 import withBackground from '../hoc/withBackground';
 import withPublicRoute from '../hoc/withPublicRoute';
+import http from '../http';
 import { signUpSchema } from '../validations';
 import InputBox from './form/InputBox';
 import PasswordToggleIcon from './icons/PasswordToggleIcon';
 
+const initialData = {
+  name: '',
+  password: '',
+  password_confirmation: '',
+  phone: '',
+  ssc: '',
+};
+
 function SignUp() {
-  const initialData = {
-    name: '',
-    password: '',
-    password_confirmation: '',
-    phone: '',
-    ssc: '',
-  };
+  //global user setter
+  const { setUser } = useUserContext();
+  //routing hook
+  const navigator = useNavigate();
+  //local component state
   const [showPass, setShowPass] = useState(false);
   const handlePassView = useCallback(() => setShowPass(prev => !prev), []);
 
@@ -37,9 +45,22 @@ function SignUp() {
     e.currentTarget.value = value.replace(/\s/g, '');
   };
 
-  const handleSubmit = async (a, b, c) => {
-    console.log('a', a);
-    console.log('b', b);
+  const handleSubmit = async (data, formikBag) => {
+    const formData = new FormData();
+    for (const key in data) {
+      formData.append(key, data[key]);
+    }
+
+    try {
+      const response = await http.signUp(formData);
+      const { user, token } = response.data.data;
+      setUser(user);
+      navigator('/registration', { replace: true });
+      console.log(user, token);
+    } catch (err) {
+      console.log(err);
+    }
+    // TODO: save token to local storage
   };
 
   return (
@@ -75,79 +96,85 @@ function SignUp() {
           validationSchema={signUpSchema}
           onSubmit={handleSubmit}
         >
-          <Form>
-            <VStack spacing={5}>
-              {/* full name */}
-              <InputBox label="Name" name="name" placeholder="Enter you name" />
-              {/* ssc batch */}
-              <InputBox
-                label="SSC batch"
-                name="ssc"
-                placeholder="Enter your SSC batch"
-                type="number"
-              />
-              {/* phone */}
-              <InputBox
-                label="Phone Number"
-                name="phone"
-                placeholder="Enter your Phone Number"
-                type="text"
-                leftElement={<PhoneIcon color={'gray.400'} />}
-                onChange={handleMobileNumber}
-              />
-              {/* password */}
-              <InputBox
-                label="Password"
-                name="password"
-                placeholder="Enter your Password"
-                type={showPass ? 'text' : 'password'}
-                leftElement={<UnlockIcon color={'gray.400'} />}
-                rightElement={
-                  <PasswordToggleIcon
-                    show={showPass}
-                    onClick={handlePassView}
-                  />
-                }
-              />
-              {/* confirm password */}
-              <InputBox
-                label="confirm password"
-                name="password_confirmation"
-                placeholder="Confirm your Password"
-                type={showPass ? 'text' : 'password'}
-                leftElement={<Icon as={BsFillUnlockFill} color={'gray.400'} />}
-                rightElement={
-                  <PasswordToggleIcon
-                    show={showPass}
-                    onClick={handlePassView}
-                  />
-                }
-              />
-              {/* submit buttons */}
-              <ButtonGroup
-                isDisabled={false}
-                size={'form'}
-                className="btn-group"
-              >
-                <Button
-                  type="reset"
-                  variant={'outline'}
-                  onClick={() => {
-                    console.log('reset');
-                  }}
+          {({ isSubmitting }) => (
+            <Form>
+              <VStack spacing={5}>
+                {/* full name */}
+                <InputBox
+                  label="Name"
+                  name="name"
+                  placeholder="Enter you name"
+                />
+                {/* ssc batch */}
+                <InputBox
+                  label="SSC batch"
+                  name="ssc"
+                  placeholder="Enter your SSC batch"
+                  type="number"
+                />
+                {/* phone */}
+                <InputBox
+                  label="Phone Number"
+                  name="phone"
+                  placeholder="Enter your Phone Number"
+                  type="text"
+                  leftElement={<PhoneIcon color={'gray.400'} />}
+                  onChange={handleMobileNumber}
+                />
+                {/* password */}
+                <InputBox
+                  label="Password"
+                  name="password"
+                  placeholder="Enter your Password"
+                  type={showPass ? 'text' : 'password'}
+                  leftElement={<UnlockIcon color={'gray.400'} />}
+                  rightElement={
+                    <PasswordToggleIcon
+                      show={showPass}
+                      onClick={handlePassView}
+                    />
+                  }
+                />
+                {/* confirm password */}
+                <InputBox
+                  label="confirm password"
+                  name="password_confirmation"
+                  placeholder="Confirm your Password"
+                  type={showPass ? 'text' : 'password'}
+                  leftElement={
+                    <Icon as={BsFillUnlockFill} color={'gray.400'} />
+                  }
+                  rightElement={
+                    <PasswordToggleIcon
+                      show={showPass}
+                      onClick={handlePassView}
+                    />
+                  }
+                />
+                {/* submit buttons */}
+                <ButtonGroup
+                  isDisabled={false}
+                  size={'form'}
+                  className="btn-group"
                 >
-                  Reset
-                </Button>
-                <Button
-                  isLoading={false}
-                  loadingText="signing up"
-                  type="submit"
-                >
-                  Sign Up
-                </Button>
-              </ButtonGroup>
-            </VStack>
-          </Form>
+                  <Button
+                    type="reset"
+                    variant={'outline'}
+                    disabled={isSubmitting}
+                  >
+                    Reset
+                  </Button>
+                  <Button
+                    isLoading={isSubmitting}
+                    loadingText="signing up"
+                    type="submit"
+                  >
+                    Sign Up
+                  </Button>
+                </ButtonGroup>
+              </VStack>
+            </Form>
+          )}
         </Formik>
       </VStack>
     </Box>
