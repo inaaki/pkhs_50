@@ -74,12 +74,15 @@ function SignUp() {
         variant: 'solid',
       });
     } catch (err) {
+      //only phone error is possible till now
+      const { status } = err.response;
       toast({
         status: 'error',
-        title: 'Error occurred',
+        title: `${status} Error occurred`,
         description: 'Sorry, we were unable to log you in',
         variant: 'solid',
       });
+      formikBag.setFieldError('phone', `\`${data.phone}\` is already taken`);
     }
   };
 
