@@ -18,6 +18,7 @@ import { useUserContext } from '../context/userContext';
 import withBackground from '../hoc/withBackground';
 import withPublicRoute from '../hoc/withPublicRoute';
 import http from '../http';
+import ls from '../utils/localStorage';
 import { signUpSchema } from '../validations';
 import InputBox from './form/InputBox';
 import PasswordToggleIcon from './icons/PasswordToggleIcon';
@@ -54,13 +55,14 @@ function SignUp() {
     try {
       const response = await http.signUp(formData);
       const { user, token } = response.data.data;
+      // global user setter
       setUser(user);
       navigator('/registration', { replace: true });
-      console.log(user, token);
+      // keep token in storage
+      ls.set(token);
     } catch (err) {
       console.log(err);
     }
-    // TODO: save token to local storage
   };
 
   return (
