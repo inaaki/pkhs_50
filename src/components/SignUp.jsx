@@ -1,99 +1,88 @@
-import { PhoneIcon, UnlockIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+import { PhoneIcon, UnlockIcon } from '@chakra-ui/icons';
 import {
   Box,
   Button,
-  Center,
+  ButtonGroup,
   chakra,
   Divider,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
   Heading,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  InputRightElement,
+  Icon,
   Link,
   useToast,
   VStack,
 } from '@chakra-ui/react';
-import { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import { reach } from 'yup';
+import { Form, Formik } from 'formik';
+import { useCallback, useState } from 'react';
+import { BsFillUnlockFill } from 'react-icons/bs';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useUserContext } from '../context/userContext';
 import withBackground from '../hoc/withBackground';
 import withPublicRoute from '../hoc/withPublicRoute';
-import { submitData } from '../utils/fakeApi';
-import { signUp, validate } from '../validations';
-import Thunder from './icons/Thunder';
+import http from '../http';
+import ls from '../utils/localStorage';
+import { signUpSchema } from '../validations';
+import InputBox from './form/InputBox';
+import PasswordToggleIcon from './icons/PasswordToggleIcon';
+
+const initialData = {
+  name: '',
+  password: '',
+  password_confirmation: '',
+  phone: '',
+  ssc: '',
+};
 
 function SignUp() {
-  const [state, setState] = useState({
-    phone: '',
-    password: '',
-  });
-  const [error, setError] = useState({});
-  const [isShow, setIsShow] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  //global user setter
+  const { setUser } = useUserContext();
+  //routing hook
+  const navigator = useNavigate();
+  //local component state
+  const [showPass, setShowPass] = useState(false);
+  const handlePassView = useCallback(() => setShowPass(prev => !prev), []);
+  // toast with chakra-ui
   const toast = useToast({
     position: 'bottom',
     isClosable: true,
     duration: 5000,
   });
 
-  //handle change function
-  const handleChange = e => {
-    let { name, value } = e.target;
-    if (value.includes('  ')) {
-      value = value.replace(/\s\s+/g, ' ');
+  const handleMobileNumber = e => {
+    //trimming all space character with regex
+    const value = e.currentTarget.value;
+    e.currentTarget.value = value.replace(/\s/g, '');
+  };
+
+  const handleSubmit = async (data, formikBag) => {
+    const formData = new FormData();
+    for (const key in data) {
+      formData.append(key, data[key]);
     }
-    const newState = { ...state };
-    newState[name] = value;
-    setState(newState);
-  };
-
-  //handle focus out
-  const handleBlur = e => {
-    const { name } = e.target;
-    reach(signUp, name)
-      .validate(state[name])
-      .then(r => {
-        setError({ ...error, [name]: '' });
-      })
-      .catch(e => {
-        setError({ ...error, [name]: e.message });
-      });
-  };
-
-  //handle submit
-  const handleSubmit = async e => {
-    e.preventDefault();
 
     try {
-      await validate(signUp, state);
-      setError({});
-      //
-      setIsLoading(true);
-      try {
-        //will be replaced by real rest-api
-        await submitData(1);
-        toast({
-          status: 'success',
-          title: 'Login successful',
-          description: "We've successfully logged you in",
-          variant: 'solid',
-        });
-      } catch (e) {
-        toast({
-          status: 'error',
-          title: 'Error occurred',
-          description: 'Sorry, we were unable to log you in',
-          variant: 'solid',
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    } catch (e) {
-      setError(e);
+      const response = await http.signUp(formData);
+      const { user, token } = response.data.data;
+      // global user setter
+      setUser(user);
+      navigator('/registration', { replace: true });
+      // keep token in storage
+      ls.set(token);
+      toast({
+        status: 'success',
+        title: 'Login successful',
+        description: "We've successfully logged you in",
+        variant: 'solid',
+      });
+    } catch (err) {
+      //only phone error is possible till now
+      const { status } = err.response;
+      toast({
+        status: 'error',
+        title: `${status} Error occurred`,
+        description: 'Sorry, we were unable to log you in',
+        variant: 'solid',
+      });
+      formikBag.setFieldError('phone', `\`${data.phone}\` is already taken`);
     }
   };
 
@@ -105,12 +94,11 @@ function SignUp() {
       borderRadius="md"
       boxShadow="md"
       m={4}
-      p={7}
-      py={10}
+      p={6}
+      py={8}
     >
-      <VStack spacing={{ base: 5, md: 8 }}>
-        <VStack spacing={2}>
-          <Thunder color="brand.500" boxSize={10} />
+      <VStack spacing={{ base: 5, md: 6 }}>
+        <VStack>
           <Heading
             as={'h3'}
             fontSize={{ base: '2xl', md: '3xl' }}
@@ -119,93 +107,98 @@ function SignUp() {
             Create an account
           </Heading>
           <chakra.span color="gray.400">
-            Already have an account?
+            Already have an account?{' '}
             <Link as={RouterLink} to={'/login'} color={'brand.600'}>
               Log In
             </Link>
           </chakra.span>
         </VStack>
         <Divider />
-        <form onSubmit={handleSubmit}>
-          <VStack spacing={6}>
-            <FormControl isInvalid={error.phone}>
-              <FormLabel htmlFor="signUp_phone">Phone Number</FormLabel>
-              <InputGroup>
-                <InputLeftElement
-                  boxSize={12}
-                  children={<PhoneIcon color={'gray.400'} />}
-                  pointerEvents="none"
+        <Formik
+          initialValues={initialData}
+          validationSchema={signUpSchema}
+          onSubmit={handleSubmit}
+        >
+          {({ isSubmitting }) => (
+            <Form>
+              <VStack spacing={5}>
+                {/* full name */}
+                <InputBox
+                  label="Name"
+                  name="name"
+                  placeholder="Enter you name"
                 />
-                <Input
-                  _placeholder={{ fontSize: { base: 'sm', md: 'md' } }}
-                  disabled={isLoading}
-                  id="signUp_phone"
-                  placeholder="Enter your Phone Number"
-                  size={'lg'}
-                  variant="filled"
-                  //
+                {/* ssc batch */}
+                <InputBox
+                  label="SSC batch"
+                  name="ssc"
+                  placeholder="Enter your SSC batch"
                   type="number"
+                />
+                {/* phone */}
+                <InputBox
+                  label="Phone Number"
                   name="phone"
-                  value={state.phone}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
+                  placeholder="Enter your Phone Number"
+                  type="text"
+                  leftElement={<PhoneIcon color={'gray.400'} />}
+                  onChange={handleMobileNumber}
                 />
-              </InputGroup>
-              <FormErrorMessage>{error.phone}</FormErrorMessage>
-            </FormControl>
-
-            {/* password field */}
-            <FormControl isInvalid={error.password}>
-              <FormLabel htmlFor="signUp_pass">Password</FormLabel>
-              <InputGroup>
-                <InputLeftElement
-                  boxSize={12}
-                  children={<UnlockIcon color={'gray.400'} />}
-                  pointerEvents="none"
-                />
-                <Input
-                  _placeholder={{ fontSize: { base: 'sm', md: 'md' } }}
-                  disabled={isLoading}
-                  id="signUp_pass"
-                  placeholder="Enter your Password"
-                  size={'lg'}
-                  variant="filled"
-                  //
-                  type={isShow ? 'text' : 'password'}
+                {/* password */}
+                <InputBox
+                  label="Password"
                   name="password"
-                  value={state.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-                <InputRightElement
-                  boxSize={12}
-                  children={
-                    isShow ? (
-                      <ViewOffIcon color={'gray.400'} boxSize={5} />
-                    ) : (
-                      <ViewIcon color={'gray.400'} boxSize={5} />
-                    )
+                  placeholder="Enter your Password"
+                  type={showPass ? 'text' : 'password'}
+                  leftElement={<UnlockIcon color={'gray.400'} />}
+                  rightElement={
+                    <PasswordToggleIcon
+                      show={showPass}
+                      onClick={handlePassView}
+                    />
                   }
-                  onClick={() => {
-                    setIsShow(state => !state);
-                  }}
                 />
-              </InputGroup>
-              <FormErrorMessage>{error.password}</FormErrorMessage>
-            </FormControl>
-            <Center pt={3}>
-              <Button
-                isLoading={isLoading}
-                loadingText="signing up"
-                size={'form'}
-                type="submit"
-                onClick={() => {}}
-              >
-                sign up
-              </Button>
-            </Center>
-          </VStack>
-        </form>
+                {/* confirm password */}
+                <InputBox
+                  label="confirm password"
+                  name="password_confirmation"
+                  placeholder="Confirm your Password"
+                  type={showPass ? 'text' : 'password'}
+                  leftElement={
+                    <Icon as={BsFillUnlockFill} color={'gray.400'} />
+                  }
+                  rightElement={
+                    <PasswordToggleIcon
+                      show={showPass}
+                      onClick={handlePassView}
+                    />
+                  }
+                />
+                {/* submit buttons */}
+                <ButtonGroup
+                  isDisabled={false}
+                  size={'form'}
+                  className="btn-group"
+                >
+                  <Button
+                    type="reset"
+                    variant={'outline'}
+                    disabled={isSubmitting}
+                  >
+                    Reset
+                  </Button>
+                  <Button
+                    isLoading={isSubmitting}
+                    loadingText="signing up"
+                    type="submit"
+                  >
+                    Sign Up
+                  </Button>
+                </ButtonGroup>
+              </VStack>
+            </Form>
+          )}
+        </Formik>
       </VStack>
     </Box>
   );

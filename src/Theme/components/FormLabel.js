@@ -1,8 +1,15 @@
 const FormLabel = {
   baseStyle: {
     color: 'heading',
-    fontSize: 'lg',
-    textTransform:'capitalize'
+    textTransform: 'capitalize',
+  },
+  sizes: {
+    md: {
+      marginBottom: 1.5,
+    },
+  },
+  defaultProps: {
+    size: 'md',
   },
 };
 

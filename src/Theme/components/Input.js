@@ -17,15 +17,14 @@ const Input = {
       },
     },
   },
-  sizes:{
-    md:{
-      field:{
-        fontSize:'lg'
-      }
-    }
+  sizes: {
+    md: {
+      field: {
+        width: 'sm',
+      },
+    },
   },
   defaultProps: {
-    size: 'md',
     variant: 'filled',
   },
 };
