@@ -8,6 +8,7 @@ import {
   Heading,
   Icon,
   Link,
+  useToast,
   VStack,
 } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
@@ -39,6 +40,12 @@ function SignUp() {
   //local component state
   const [showPass, setShowPass] = useState(false);
   const handlePassView = useCallback(() => setShowPass(prev => !prev), []);
+  // toast with chakra-ui
+  const toast = useToast({
+    position: 'bottom',
+    isClosable: true,
+    duration: 5000,
+  });
 
   const handleMobileNumber = e => {
     //trimming all space character with regex
@@ -60,8 +67,19 @@ function SignUp() {
       navigator('/registration', { replace: true });
       // keep token in storage
       ls.set(token);
+      toast({
+        status: 'success',
+        title: 'Login successful',
+        description: "We've successfully logged you in",
+        variant: 'solid',
+      });
     } catch (err) {
-      console.log(err);
+      toast({
+        status: 'error',
+        title: 'Error occurred',
+        description: 'Sorry, we were unable to log you in',
+        variant: 'solid',
+      });
     }
   };
 
