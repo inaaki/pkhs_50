@@ -58,11 +58,13 @@ function LoggedIn({ user, onClick }) {
       ls.remove();
       //set global user to {} and close mobile nav
       onClick({});
-    } catch (e) {
-      toast.error(
-        'Error occurred',
-        'Sorry, log out was unsuccessful. Try again later!'
-      );
+    } catch (err) {
+      http.rejectHelper(err, () => {
+        toast.error(
+          'Error occurred',
+          'Sorry, log out was unsuccessful. Try again later!'
+        );
+      });
     }
   };
 

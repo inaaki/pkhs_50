@@ -69,8 +69,11 @@ function SignUp() {
       toast.success('Login successful', "We've successfully logged you in");
     } catch (err) {
       //only phone error is possible till now
-      toast.error('Error occurred', 'Sorry, we were unable to log you in');
-      formikBag.setFieldError('phone', `\`${data.phone}\` is already taken`);
+      http.rejectHelper(err, () => {
+        toast.error('Error occurred', 'Sorry, we were unable to log you in');
+        //TODO: create field error function generator(must add password)
+        formikBag.setFieldError('phone', `\`${data.phone}\` is already taken`);
+      });
     }
   };
 

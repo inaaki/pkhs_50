@@ -1,8 +1,8 @@
-import http from './client';
+import httpClient from './client';
 
 async function signUp(data) {
   const ROUTE = '/signup';
-  return http.post(ROUTE, data);
+  return httpClient.post(ROUTE, data);
 }
 
 async function logOut(token) {
@@ -11,12 +11,16 @@ async function logOut(token) {
     headers: {
       Authorization: `Bearer ${token}`,
     },
+    //TODO: create a global toaster for timeout
     timeout: 5000,
   };
-  return http.post(ROUTE, {}, config);
+  return httpClient.post(ROUTE, {}, config);
 }
 
-export default {
+const http = {
   signUp,
   logOut,
+  rejectHelper: httpClient.handleCancelReject,
 };
+
+export default http;
