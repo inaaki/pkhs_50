@@ -8,7 +8,6 @@ import {
   Heading,
   Icon,
   Link,
-  useToast,
   VStack,
 } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
@@ -20,6 +19,7 @@ import withBackground from '../hoc/withBackground';
 import withPublicRoute from '../hoc/withPublicRoute';
 import http from '../http';
 import ls from '../utils/localStorage';
+import createToast from '../utils/toast';
 import { signUpSchema } from '../validations';
 import InputBox from './form/InputBox';
 import PasswordToggleIcon from './icons/PasswordToggleIcon';
@@ -40,12 +40,8 @@ function SignUp() {
   //local component state
   const [showPass, setShowPass] = useState(false);
   const handlePassView = useCallback(() => setShowPass(prev => !prev), []);
-  // toast with chakra-ui
-  const toast = useToast({
-    position: 'bottom',
-    isClosable: true,
-    duration: 5000,
-  });
+  //toast
+  const toast = createToast();
 
   const handleMobileNumber = e => {
     //trimming all space character with regex
@@ -69,21 +65,11 @@ function SignUp() {
       ls.set(token);
       //navigate to registration
       navigator('/registration', { replace: true });
-      toast({
-        status: 'success',
-        title: 'Login successful',
-        description: "We've successfully logged you in",
-        variant: 'solid',
-      });
+      //show toast
+      toast.success('Login successful', "We've successfully logged you in");
     } catch (err) {
       //only phone error is possible till now
-      const { status } = err.response;
-      toast({
-        status: 'error',
-        title: `${status} Error occurred`,
-        description: 'Sorry, we were unable to log you in',
-        variant: 'solid',
-      });
+      toast.error('Error occurred', 'Sorry, we were unable to log you in');
       formikBag.setFieldError('phone', `\`${data.phone}\` is already taken`);
     }
   };

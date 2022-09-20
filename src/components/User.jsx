@@ -4,7 +4,6 @@ import {
   HStack,
   Icon,
   useBreakpointValue,
-  useToast,
 } from '@chakra-ui/react';
 import isEmpty from 'lodash/isEmpty';
 import React from 'react';
@@ -13,6 +12,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useUserContext } from '../context/userContext';
 import http from '../http';
 import ls from '../utils/localStorage';
+import createToast from '../utils/toast';
 import SignIn from './icons/SignIn';
 import SignUp from './icons/SignUp';
 
@@ -40,11 +40,7 @@ function LoggedIn({ user, onClick }) {
   //will be replaced later with dynamic code
   const isRegistered = user?.isRegistered;
 
-  const toast = useToast({
-    position: 'bottom',
-    isClosable: true,
-    duration: 5000,
-  });
+  const toast = createToast();
 
   const responsiveSize = useBreakpointValue({
     base: 'md',
@@ -58,30 +54,15 @@ function LoggedIn({ user, onClick }) {
     try {
       await http.logOut(token);
       //notify user
-      toast({
-        status: 'success',
-        title: `Logout Successful`,
-        description: "We've successfully logged you out",
-        variant: 'solid',
-      });
+      toast.success('Logout Successful', "We've successfully logged you out");
       ls.remove();
       //set global user to {} and close mobile nav
       onClick({});
     } catch (e) {
-      ls.set(token);
-
-      let title = 'Error occurred';
-      let description = 'Sorry, log out was unsuccessful. Try again later!';
-      if (e.code === 'ERR_NETWORK') {
-        title = e.message;
-        description = 'Please check your connection and try again!';
-      }
-      toast({
-        status: 'error',
-        title,
-        description,
-        variant: 'solid',
-      });
+      toast.error(
+        'Error occurred',
+        'Sorry, log out was unsuccessful. Try again later!'
+      );
     }
   };
 
