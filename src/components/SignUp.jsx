@@ -63,10 +63,12 @@ function SignUp() {
       const response = await http.signUp(formData);
       const { user, token } = response.data.data;
       // global user setter
+      user.token = token;
       setUser(user);
-      navigator('/registration', { replace: true });
       // keep token in storage
       ls.set(token);
+      //navigate to registration
+      navigator('/registration', { replace: true });
       toast({
         status: 'success',
         title: 'Login successful',

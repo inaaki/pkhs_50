@@ -18,9 +18,6 @@ class Store {
   remove() {
     return store.remove(wm.get(this));
   }
-  clear() {
-    store.clear();
-  }
 }
 
 export default new Store();
