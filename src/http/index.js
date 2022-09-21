@@ -11,7 +11,6 @@ async function logOut(token) {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    //TODO: create a global toaster for timeout
     timeout: 5000,
   };
   return httpClient.post(ROUTE, {}, config);

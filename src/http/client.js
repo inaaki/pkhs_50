@@ -11,6 +11,9 @@ axios.interceptors.response.use(
     if (err.code === 'ERR_NETWORK') {
       toast.networkError();
       throw new axios.Cancel('Network Error');
+    } else if (err.code === 'ECONNABORTED') {
+      toast.timeoutError();
+      throw new axios.Cancel('Timeout Error');
     }
     return Promise.reject(err);
   }

@@ -37,11 +37,23 @@ function createToast(config = {}) {
       variant: 'solid',
     });
   }
+  function timeoutError(
+    title = 'Request timeout',
+    description = 'Please, try again later on a stable connection'
+  ) {
+    toast({
+      description,
+      status: 'error',
+      title,
+      variant: 'solid',
+    });
+  }
 
   return {
     error: errorToast,
-    success: successToast,
     networkError,
+    success: successToast,
+    timeoutError,
   };
 }
 
