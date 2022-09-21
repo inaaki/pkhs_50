@@ -30,7 +30,9 @@ function Login() {
       // set global user
       setUser(user);
       // navigate user
-      navigate('/registration'); //TODO: add dynamic location navigation
+      navigate(location.state?.from || '/registration', {
+        replace: true,
+      });
     } catch (error) {}
   };
 
