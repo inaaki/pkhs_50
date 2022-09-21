@@ -18,6 +18,7 @@ import { useUserContext } from '../context/userContext';
 import withBackground from '../hoc/withBackground';
 import withPublicRoute from '../hoc/withPublicRoute';
 import http from '../http';
+import apiToFieldError from '../utils/apiToFieldError';
 import ls from '../utils/localStorage';
 import createToast from '../utils/toast';
 import { signUpSchema } from '../validations';
@@ -68,16 +69,18 @@ function SignUp() {
       //show toast
       toast.success('Login successful', "We've successfully logged you in");
     } catch (err) {
-      //only phone error is possible till now
       http.rejectHelper(err, () => {
         toast.error('Error occurred', 'Sorry, we were unable to log you in');
-        //TODO: create field error function generator(must add password)
-        formikBag.setFieldError('phone', `\`${data.phone}\` is already taken`);
+        const errors = apiToFieldError(err.response.data.errors);
+        for (const key in errors) {
+          formikBag.setFieldError(key, errors[key]);
+        }
       });
     }
   };
 
   return (
+    //FIXME: fix form cls on error
     <Box
       bg="white"
       border="1px"

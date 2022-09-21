@@ -1,6 +1,7 @@
 import { createStandaloneToast } from '@chakra-ui/react';
 
 function createToast(config = {}) {
+  //TODO: tweak toast config
   const toast = createStandaloneToast({
     defaultOptions: {
       position: 'bottom',
