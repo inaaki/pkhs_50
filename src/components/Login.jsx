@@ -10,26 +10,28 @@ import {
 } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
+import { useUserContext } from '../context/userContext';
 import withBackground from '../hoc/withBackground';
 import withPublicRoute from '../hoc/withPublicRoute';
+import http from '../http';
 import { loginSchema } from '../validations';
 import InputBox from './form/InputBox';
 
 function Login() {
+  const { setUser } = useUserContext();
   const navigate = useNavigate();
   const location = useLocation();
 
   //handle submit
   const handleSubmit = async (formValue, formikBag) => {
     try {
-      //call api
-      //set token to local storage
-      //navigate to user cheyeche page
-      //show toast
-    } catch (error) {
-      //show toast
-      //update error state
-    }
+      // call api
+      const user = await http.login(formValue);
+      // set global user
+      setUser(user);
+      // navigate user
+      navigate('/registration'); //TODO: add dynamic location navigation
+    } catch (error) {}
   };
 
   return (
