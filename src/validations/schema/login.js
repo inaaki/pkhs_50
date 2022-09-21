@@ -1,12 +1,13 @@
-import { object } from 'yup';
+import { object, string } from 'yup';
 import errMsg from '../utils/errorMessage';
-import partialSchema from './partialSchema';
 
-const { mobileNumber, requiredString } = partialSchema;
+const BD_MOBILE_VALIDATION_REGEX = /^(01[3-9]\d{8})$/;
 
 const loginSchema = object({
-  phone: mobileNumber.required(errMsg.required),
-  password: requiredString,
+  phone: string()
+    .matches(BD_MOBILE_VALIDATION_REGEX, errMsg.mobile_11)
+    .required(errMsg.required),
+  password: string().required(errMsg.required),
 });
 
 export default loginSchema;
