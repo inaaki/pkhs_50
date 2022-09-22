@@ -1,14 +1,17 @@
 import { createStandaloneToast } from '@chakra-ui/react';
 
 function createToast(config = {}) {
-  //TODO: tweak toast config
   const toast = createStandaloneToast({
     defaultOptions: {
       position: 'bottom',
       isClosable: true,
-      duration: 6500,
+      duration: 5250,
       variant: 'solid',
       status: 'info',
+      containerStyle: {
+        maxWidth: '350px',
+        width: '100%',
+      },
     },
     ...config,
   });
