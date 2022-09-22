@@ -74,7 +74,7 @@ function Login() {
         >
           {({ isSubmitting }) => (
             <Form>
-              <VStack spacing={6}>
+              <VStack spacing={6} maxWidth={'sm'}>
                 <InputBox
                   placeholder={'Enter your phone number'}
                   name={'phone'}

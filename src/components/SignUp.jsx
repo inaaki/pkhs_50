@@ -80,7 +80,6 @@ function SignUp() {
   };
 
   return (
-    //FIXME: fix form cls on error
     <Box
       bg="white"
       border="1px"
@@ -115,7 +114,7 @@ function SignUp() {
         >
           {({ isSubmitting }) => (
             <Form>
-              <VStack spacing={5}>
+              <VStack spacing={5} maxWidth={'sm'}>
                 {/* full name */}
                 <InputBox
                   label="Name"
