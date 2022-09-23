@@ -27,8 +27,9 @@ function handleCancelReject(err, cb) {
 }
 
 const client = {
-  post: axios.post,
+  get: axios.get,
   handleCancelReject,
+  post: axios.post,
 };
 
 export default client;
