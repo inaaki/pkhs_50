@@ -51,31 +51,22 @@ function SignUp() {
   };
 
   const handleSubmit = async (data, formikBag) => {
-    const formData = new FormData();
-    for (const key in data) {
-      formData.append(key, data[key]);
-    }
-
     try {
-      const response = await http.signUp(formData);
-      const { user, token } = response.data.data;
-      // global user setter
-      user.token = token;
-      setUser(user);
+      const user = await http.signUp(data);
       // keep token in storage
-      ls.set(token);
+      ls.set(user.token);
+      // set user globally
+      setUser(user);
+
       //navigate to registration
       navigator('/registration', { replace: true });
-      //show toast
-      toast.success('Login successful', "We've successfully logged you in");
     } catch (err) {
-      http.rejectHelper(err, () => {
-        toast.error('Error occurred', 'Sorry, we were unable to log you in');
+      if (err?.response?.status == '422') {
         const errors = apiToFieldError(err.response.data.errors);
         for (const key in errors) {
           formikBag.setFieldError(key, errors[key]);
         }
-      });
+      }
     }
   };
 

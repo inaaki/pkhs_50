@@ -4,8 +4,23 @@ import createToast from '../utils/toast';
 import httpClient from './client';
 
 async function signUp(data) {
+  // `data` should be pure object === {}
   const ROUTE = '/signup';
-  return httpClient.post(ROUTE, data);
+  const formData = new FormData();
+  for (const key in data) {
+    formData.append(key, data[key]);
+  }
+  const toast = createToast();
+  try {
+    const response = await httpClient.post(ROUTE, formData);
+    toast.success('Account created', "We've successfully logged you in");
+    const { user, token } = response.data.data;
+    user.token = token;
+    return Promise.resolve(user);
+  } catch (err) {
+    toast.error('Error occurred', "Account creation was unsuccessful");
+    return Promise.reject(err);
+  }
 }
 
 async function logOut(token) {
