@@ -9,7 +9,7 @@ function createToast(config = {}) {
       variant: 'solid',
       status: 'info',
       containerStyle: {
-        maxWidth: '350px',
+        maxWidth: '375px',
         width: '100%',
       },
     },
