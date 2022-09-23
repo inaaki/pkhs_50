@@ -1,6 +1,7 @@
 import qs from 'qs';
 import ls from '../utils/localStorage';
 import createToast from '../utils/toast';
+import tokenGenerator from '../utils/tokenGenerator';
 import httpClient from './client';
 
 async function signUp(data) {
@@ -27,7 +28,7 @@ async function logOut(token) {
   const ROUTE = '/user/logout';
   const config = {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: tokenGenerator(token),
     },
     timeout: 5000,
   };
@@ -66,10 +67,34 @@ async function login(data) {
   }
 }
 
+//fetch user data
+async function getUser(token) {
+  const toast = createToast();
+  const ROUTE = '/user/profile';
+  const config = {
+    headers: {
+      Authorization: tokenGenerator(token),
+    },
+    timeout: 10000,
+  };
+  try {
+    const response = await httpClient.get(ROUTE, config);
+    const user = response.data.data;
+    return Promise.resolve(user);
+  } catch (err) {
+    const { response } = err;
+    if (response.status == '401') {
+      toast.notify('Please, try to login again :)');
+    }
+    return Promise.reject(err);
+  }
+}
+
 const http = {
-  rejectHelper: httpClient.handleCancelReject,
+  getUser,
   logOut,
   login,
+  rejectHelper: httpClient.handleCancelReject,
   signUp,
 };
 

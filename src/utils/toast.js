@@ -10,7 +10,6 @@ function createToast(config = {}) {
       status: 'info',
       containerStyle: {
         maxWidth: '375px',
-        width: '100%',
       },
     },
     ...config,
@@ -52,9 +51,19 @@ function createToast(config = {}) {
     });
   }
 
+  function notify(title, description) {
+    toast({
+      description,
+      status: 'info',
+      title,
+      variant: 'solid',
+    });
+  }
+
   return {
     error: errorToast,
     networkError,
+    notify,
     success: successToast,
     timeoutError,
   };
