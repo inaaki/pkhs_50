@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
 import FullLoader from './components/loader/FullLoader';
@@ -15,6 +15,12 @@ const Registration = lazy(() =>
 const NotFound = lazy(() => import('./components/NotFound'));
 
 function App() {
+  useEffect(() => {
+    const loaderTag = document.getElementById('loader-tag');
+    const loaderStyle = document.getElementById('loader-style');
+    loaderTag?.parentNode.removeChild(loaderTag);
+    loaderStyle?.parentNode.removeChild(loaderStyle);
+  }, []);
   return (
     <Layout>
       <Suspense fallback={<FullLoader />}>
