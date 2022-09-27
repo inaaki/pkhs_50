@@ -1,4 +1,5 @@
 /* eslint-disable no-dupe-keys */
+import { NAV_HEIGHT } from '../utils/minHeight';
 
 const styles = {
   styles: {
@@ -16,7 +17,7 @@ const styles = {
       },
       '#root': {
         //fixed nav height
-        mt: '67.5px',
+        mt: NAV_HEIGHT,
       },
       'body::-webkit-scrollbar': {
         //width of the entire scrollbar
