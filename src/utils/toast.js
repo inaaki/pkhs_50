@@ -1,7 +1,9 @@
 import { createStandaloneToast } from '@chakra-ui/react';
+import theme from '../Theme/_index';
 
 function createToast(config = {}) {
   const toast = createStandaloneToast({
+    theme,
     defaultOptions: {
       position: 'bottom',
       isClosable: true,
