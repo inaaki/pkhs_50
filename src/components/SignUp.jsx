@@ -59,7 +59,15 @@ function SignUp() {
       setUser(user);
 
       //navigate to registration
-      navigator('/registration', { replace: true });
+      const { name, ssc, phone } = data;
+      navigator('/upload-picture', {
+        replace: true,
+        state: {
+          phone,
+          ssc,
+          name,
+        },
+      });
     } catch (err) {
       if (err?.response?.status == '422') {
         const errors = apiToFieldError(err.response.data.errors);
